@@ -1,0 +1,25 @@
+// time complexity = O(n) n=words array length
+// space complexity = O(n)
+class Solution {
+    public String longestWord(String[] words)
+    {
+        String out="";
+        Arrays.sort(words); // to maintain lexicographical order
+      //  for(String i: words)
+        //    System.out.println(i);
+        Set<String> sc=new HashSet(); // to store stringd
+        for(int i=0;i<words.length;i++)
+        {
+            if(words[i].length()==1 || sc.contains(words[i].substring(0,words[i].length()-1)))
+            {
+                sc.add(words[i]); // add to set if above condition match
+                if(words[i].length()>out.length())
+                {
+                    out=words[i];
+                    //System.out.println(out);
+                }
+            }
+        }
+        return out;
+    }
+}

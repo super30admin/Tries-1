@@ -1,0 +1,25 @@
+// timr complexity = O(n*m) n=size of dict, m = no of words in a string
+//space complexity = O(m)
+class Solution {
+    public String replaceWords(List<String> dict, String sentence) {
+        String[] s=sentence.split(" "); // to store words seperately
+        String out="";
+        for(int j=0;j<s.length;j++)
+            for(int i=0;i<dict.size();i++)
+            {
+                String s1=dict.get(i);
+               // System.out.println(s1);
+                if(s[j].length()>s1.length())
+                {
+                    if(s[j].substring(0,s1.length()).equals(s1)) // if word contains root as start then replace it
+                    {
+                        s[j]=s1;
+                        break;
+                    }
+                }
+            }
+        for(int i=0;i<s.length;i++)
+            out=out+s[i]+" ";
+        return out.trim();
+    }
+}

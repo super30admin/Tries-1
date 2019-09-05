@@ -1,4 +1,4 @@
-// Time Complexity : O(n)
+// Time Complexity : O(wordLength^2)
 // Space Complexity :
 // Did this code successfully run on Leetcode : yes
 // Any problem you faced while coding this :

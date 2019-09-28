@@ -4,8 +4,12 @@ Create a Trei Data structure
 Time complexity : creation = O(N), Search O(N), Prefix O(N). N -> word length
 
 Space complexity : O(num_words)
+
+Works on leet code . Silly mistake in the prefix implementation
 """
+
 class Trie(object):
+    
     nodes = {}
     word_end = False
     

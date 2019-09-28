@@ -3,6 +3,8 @@ Author: Akhilesh Borgaonkar
 Problem: Implement trie data structure with insert, search and startsWith methods.
 Approach: Implemented using a Trie structure which has a isWord boolean flag which defines if the previous alphabets make a word &
     a hashmap which stores the children in the form of character as key and trieNode as value.
+Time Complexity: O(n)
+Space Complexity: O(n)
 */
 
 class TrieNode{

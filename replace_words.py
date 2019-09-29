@@ -1,3 +1,13 @@
+"""
+
+Given a dictionary of roots replace words in a sentence with the right root if it exists
+
+Time complexity = O(N)
+Space complexity = O(N)
+
+"""
+
+
 class Trei:
     child = {}
     root_end = False
@@ -42,5 +52,3 @@ class Solution(object):
             root.add(i)
         
         return " ".join([root.get_root(i) for i in sentence.split()])
-
-

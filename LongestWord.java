@@ -1,4 +1,4 @@
-//Time Complexity :O(N*M) for insert Strings, O(N) for searching longest string
+//Time Complexity :O(N*M) for insert Strings, O(N*M) for searching longest string
 //Space Complexity :O(N*M) N - no. of strings and M - length of string
 //Did this code successfully run on Leetcode :yes
 //Any problem you faced while coding this :Nope

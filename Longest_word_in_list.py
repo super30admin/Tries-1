@@ -1,8 +1,7 @@
 # Runs on Leetcode
-    # Runtime - O()
-    # Memory - O()
-
-
+    # Runtime - O(m*n) where m is # of words and n is length of longest word
+    # Memory - O(# of words)
+    
 class Solution:
     class TrieNode:
         def __init__(self):

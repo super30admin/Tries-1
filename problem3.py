@@ -37,10 +37,10 @@ class Trie:
 
     def replaceWords(self, sentence) -> str:
         res = []
-        # We need to use dequeue and popleft to main lexographic
+        # We need to use queue and pop to main lexographic
         # "apply", "apple" should return apple
         wordList = sentence.split(' ')
-        cursor = ''
+
         for word in wordList:
             cursor = self.root
             for i in range(0, len(word)):

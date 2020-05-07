@@ -1,5 +1,5 @@
 // Time Complexity : O(n*m) where n is the number of word and m is the no of operation for each string
-// Space Complexity :O(maximum depth of the tree)
+// Space Complexity :O(n*m)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : Figuring out the dfs function
 

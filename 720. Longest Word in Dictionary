@@ -1,0 +1,64 @@
+Time complexity: O(Max.word length) 
+Space complexity: O(Max.word length)
+Did this code successfully submitted on leetcode: Yes
+
+class Solution {
+    
+    class TrieNode{
+        String str;
+        TrieNode[] children;
+        
+        public TrieNode(){
+            str = "";
+            children = new TrieNode[26];
+        }
+    }
+    
+    TrieNode root;
+    
+    public String longestWord(String[] words) {
+        
+        root = new TrieNode();
+        
+        //Create trie from words
+        create_Trie(words);
+        
+        //finding the larger string
+        return larger_str(root);
+    }
+    
+    public String larger_str(TrieNode root){
+        String ret_val = root.str;
+        
+        for(int i=0; i<26; i++){
+            
+            if(root.children[i]!=null && root.children[i].str!=""){
+                String temp = larger_str(root.children[i]);
+                
+                if(ret_val.length() < temp.length())
+                    ret_val = temp;
+            }
+        }
+        
+        return ret_val;
+    }
+    
+    public void create_Trie(String[] words){
+        
+        for(String word : words){
+            TrieNode node = root;
+            
+            for(int i=0; i<word.length(); i++){
+                char ch = word.charAt(i);
+                
+                if(node.children[ch-'a']==null){
+                    node.children[ch-'a'] = new TrieNode();
+                }
+                
+                node = node.children[ch-'a'];
+            }
+            
+            node.str = word;
+        }
+    }
+}

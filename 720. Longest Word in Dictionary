@@ -1,5 +1,5 @@
-Time complexity: O(Max.word length) 
-Space complexity: O(Max.word length)
+Time complexity: O(m*n) m = number of words, n = operations performed at every mth element 
+Space complexity: O(m*n)
 Did this code successfully submitted on leetcode: Yes
 
 class Solution {

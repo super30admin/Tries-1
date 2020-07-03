@@ -1,0 +1,51 @@
+// Time Complexity : O(L*n) where n is the number of words and  L is the average length of each word for inserting.
+// Space Complexity : O(n*l) 26 nodes at each level asymptotically increases based on level and l is the level number.worst case all 26 nodes are present at each level.// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : No
+
+
+// Your code here along with comments explaining your approach: BfS approach, adding the children from last to first to maintain the lexicographical order. In case 2 words of the same length clash. The word assosciated with the last node polled out is the answer.
+
+
+class Solution {
+      class TrieNode{
+        String word;
+        TrieNode [] children;
+        public TrieNode(){
+            children=new TrieNode[26];
+        }
+    }
+    TrieNode root;
+    /** Initialize your data structure here. */
+
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        TrieNode curr=root;
+        for(int i=0;i<word.length();i++){
+            char c=word.charAt(i);
+            if(curr.children[c-'a']==null){
+                curr.children[c-'a']=new TrieNode();
+            }
+            curr=curr.children[c-'a'];
+        }
+        curr.word=word;
+    }
+    public String longestWord(String[] words) {
+        root=new TrieNode();
+        for(String s : words){
+            insert(s);
+        }
+        Queue<TrieNode> q=new LinkedList<>();
+        q.add(root);
+        TrieNode curr=null;
+        while(!q.isEmpty()){
+              curr=q.poll();
+            for(int i=25;i>=0;i--){
+                if(curr.children[i]!=null && curr.children[i].word!=null){
+                    q.add(curr.children[i]);
+                }
+            }
+        }
+        return curr.word;
+    }
+}

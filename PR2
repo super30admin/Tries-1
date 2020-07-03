@@ -1,0 +1,110 @@
+// Time Complexity : O(n*L) - inserting n- words, l- average length of each word, O(m*L)-m is the length of the word to be searched and the average length of the words.
+// Space Complexity : O(n*l) 26 nodes at each level asymptotically increases based on level and l is the level number.worst case all 26 nodes are present at each level.
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : No
+
+
+// Your code here along with comments explaining your approach: used both isEnd and isFalse. Search for the first isEnd/word!=null and return if the string is a prefix using string builder.
+class Solution {
+      class TrieNode{
+        String word;
+        TrieNode [] children;
+        public TrieNode(){
+            children=new TrieNode[26];
+        }
+    }
+    TrieNode root;
+    /** Initialize your data structure here. */
+
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        TrieNode curr=root;
+        for(int i=0;i<word.length();i++){
+            char c=word.charAt(i);
+            if(curr.children[c-'a']==null){
+                curr.children[c-'a']=new TrieNode();
+            }
+            curr=curr.children[c-'a'];
+        }
+        curr.word=word;
+    }
+        
+    public String replaceWords(List<String> dict, String sentence) {
+        root=new TrieNode();
+       for(String s:dict){
+           insert(s);
+       }
+       StringBuilder sb=new StringBuilder();
+        String[] sentenceArr=sentence.split("\\s+");//["the","cattle"..]
+        for(int i=0;i<sentenceArr.length;i++){
+            String sWord=sentenceArr[i];
+            TrieNode curr=root;
+            if(i>0) sb.append(" ");
+            for(int j=0;j<sWord.length();j++){
+                char c=sWord.charAt(j);
+                if(curr.children[c-'a']==null ||curr.word!=null) break;
+                curr=curr.children[c-'a'];
+            }
+            String replacement;
+            if(curr.word==null) replacement=sWord;
+            else replacement=curr.word;
+            sb.append(replacement);
+        }
+        return sb.toString();
+}
+}
+
+
+
+class Solution {
+      class TrieNode{
+        boolean isEnd;
+        TrieNode [] children;
+        public TrieNode(){
+            children=new TrieNode[26];
+        }
+    }
+    TrieNode root;
+    /** Initialize your data structure here. */
+
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        TrieNode curr=root;
+        for(int i=0;i<word.length();i++){
+            char c=word.charAt(i);
+            if(curr.children[c-'a']==null){
+                curr.children[c-'a']=new TrieNode();
+            }
+            curr=curr.children[c-'a'];
+        }
+        curr.isEnd=true;
+    }
+        
+    public String replaceWords(List<String> dict, String sentence) {
+        root=new TrieNode();
+       for(String s:dict){
+           insert(s);
+       }
+       StringBuilder sb=new StringBuilder();
+        String[] sentenceArr=sentence.split("\\s+");//["the","cattle"..]
+        for(int i=0;i<sentenceArr.length;i++){
+            String sWord=sentenceArr[i];
+            TrieNode curr=root;
+            if(i>0) sb.append(" ");
+            StringBuilder replaceSb=new StringBuilder();
+            for(int j=0;j<sWord.length();j++){
+                char c=sWord.charAt(j);
+                if(curr.children[c-'a']==null ||curr.isEnd!=false) break;
+                replaceSb.append(c);
+                curr=curr.children[c-'a'];
+            }
+            String replacement;
+            if(curr.isEnd==false) replacement=sWord;
+            else replacement=replaceSb.toString();
+            sb.append(replacement);
+        }
+        return sb.toString();
+}
+}

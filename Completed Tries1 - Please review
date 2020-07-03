@@ -1,0 +1,143 @@
+PROBLEM 1 -
+// Time Complexity :O(n)
+// Space Complexity :O(1)
+// Did this code successfully run on Leetcode :Yes
+
+class Trie {
+    class Node {
+        var char: Character?
+        var route: [Character:Node]
+        var isWord: Bool
+        
+        init(_ char: Character?, _ isWord: Bool = false) {
+            self.char = char
+            self.route = [Character:Node]()
+            self.isWord = isWord
+        }
+    }
+    
+    var head: Node
+    
+    /** Initialize your data structure here. */
+    init() {
+        head = Node(nil)
+    }
+    
+    /** Inserts a word into the trie. */
+    func insert(_ word: String) {
+        var curr = head
+        
+        for char in word {
+            if curr.route[char] == nil {
+                curr.route[char] = Node(char)
+            }
+            curr = curr.route[char]!
+        }
+        curr.isWord = true
+    }
+    
+    /** Returns if the word is in the trie. */
+    func search(_ word: String) -> Bool {
+        var curr = head
+        
+        for char in word {
+            if curr.route[char] == nil {
+                return false
+            }
+            curr = curr.route[char]!
+        }
+        return curr.isWord
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    func startsWith(_ prefix: String) -> Bool {
+        var curr = head
+        
+        for char in prefix {
+            if curr.route[char] == nil {
+                return false
+            }
+            curr = curr.route[char]!
+        }
+        return true
+    }
+}
+
+PROBLEM 2 -
+// Time Complexity :O(n)
+// Space Complexity :O(n)
+// Did this code successfully run on Leetcode :Yes
+
+class Solution {
+    func longestWord(_ words: [String]) -> String {
+        var words = words.sorted()
+        var wordSet = Set<String>()
+        var result = ""
+        for w in words {
+            if w.count == 1 || wordSet.contains(String(w.prefix(w.count - 1))) {
+                result = w.count > result.count ? w : result
+                wordSet.insert(w)
+            }
+        }
+        return result
+    }
+}
+
+PROBLEM 3 -
+// Time Complexity :O(n)
+// Space Complexity :O(n)
+// Did this code successfully run on Leetcode :Yes
+
+class Solution {
+    func replaceWords(_ dict: [String], _ sentence: String) -> String {
+        
+        class TrieNode {
+            var children = [Character : TrieNode]()
+            var isWord = false
+        }
+        
+        class Trie {
+            var root = TrieNode()
+            
+            func insert(_ word: String) {
+                let word = Array(word)
+                var cur = root
+                for i in 0..<word.count {
+                    if cur.children[word[i]] == nil {
+                        cur.children[word[i]] = TrieNode()
+                    }
+                    cur = cur.children[word[i]]!
+                }
+                cur.isWord = true
+            }
+            
+            func searchRoot(_ word: String) -> String {
+                let word = Array(word)
+                var cur = root
+                for i in 0..<word.count {
+                    guard let child = cur.children[word[i]] else {
+                        return String(word)
+                    }
+                    if child.isWord == true {
+                        return String(word[0...i])
+                    }
+                    cur = child
+                }
+                return String(word)
+            }
+        }
+        
+        
+        var trie = Trie()
+        for str in dict {
+            trie.insert(str)
+        }
+        
+        var arr = sentence.split(separator: " ")
+        var ans = [String]()
+        for i in 0..<arr.count {
+            ans.append(trie.searchRoot(String(arr[i])))
+        }
+        return ans.joined(separator: " ")
+    }
+}

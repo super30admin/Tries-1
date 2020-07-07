@@ -164,3 +164,73 @@ class Solution {
 }
 
 */
+
+
+/* USing DFS with recursion similar to stack but not using explicit stack
+    class Solution {
+    Trie root;
+    class Trie{
+        String word;
+        Trie [] children;
+        
+        public Trie(){
+            children = new Trie[26];
+        }
+        
+    }
+    
+    
+    private void add_word(String word){
+        Trie cur = root;
+        for( int i =0; i < word.length() ; i++){
+            char c = word.charAt(i);
+            
+            if(cur.children[c - 'a'] == null){
+                cur.children [c - 'a'] = new Trie();
+            }
+            cur = cur.children[c -  'a'];
+        }
+        
+        cur.word = word;
+    }
+    String res;
+    public String longestWord(String[] words) {
+        root = new Trie();
+        
+//       add words in Trie for processing
+        for(String word :  words){
+            add_word(word);
+        }
+        res ="";
+        dfs(root);
+        
+        return res;
+    }
+    
+        private void dfs(Trie node){
+            if( node == null) return;
+
+            if(node.word != null){
+                if(node.word.length() > res.length()){
+                    res = node.word;
+                }
+                // if word are same then check if new word is lexographically small then 
+                // update result
+                if(node.word.length() == res.length() && node.word.compareTo(res) < 0){
+                    res = node.word;
+                }
+            }
+
+            Trie [] children = node.children;
+            // call dfs for all children
+            // processing in ascending order as dfs is LIFO
+            for(int i=0; i < 26; i++){
+                if( children[i] != null && children[i].word != null){
+                    dfs(children[i]);
+                }
+            }
+        }
+    
+    }
+
+*/

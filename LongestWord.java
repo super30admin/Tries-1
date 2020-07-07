@@ -56,3 +56,37 @@ public class LongestWord {
         return node.word;
     }
 }
+
+/*
+
+// Longest word using prefix search
+
+// for the longest word all of its prefix should be in dictionary 
+// for that we will maintain set
+
+public String longestWord(String[] words) {
+        String res = "";
+        
+        Set<String> s = new HashSet();
+        for(String word : words){
+            s.add(word);
+        }
+        
+        for(String word: words){
+            if( word.length() > res.length() || word.length() == res.length() && word.compareTo(res) < 0){
+                boolean found = true;
+                for( int k =1;k< word.length();k++){
+                    if(!s.contains(word.substring(0,k))){
+                        found = false;
+                        break;
+                    }
+                }
+                if(found){
+                    res =  word;
+                }
+            }
+        }
+        return res;
+    }
+
+*/

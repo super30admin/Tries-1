@@ -29,13 +29,14 @@ class Solution(object):
         curr.word = word
 
     def longestWord(self, words):
+        # adding to the trie
         for i in words:
             self.insert(i)
-
+        # queue init
         q = deque()
         q.appendleft(self.root)
         curr = None
-
+        # BFS with small lexicographical order
         while len(q) != 0:
             curr = q.pop()
             for j in range(25, -1, -1):

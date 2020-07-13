@@ -48,9 +48,4 @@ class Trie:
             curr=curr.children[ord(c)-ord('a')]
         return True
 
-# Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
-
+Time Complexity is O(Length of the word)

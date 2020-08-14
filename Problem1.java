@@ -42,7 +42,7 @@ class Trie {
         TrieNode current = root;
         // iterate word
         for(int i=0; i<word.length(); i++){
-            // find index:[a-z] -> [0-25]
+            // Mapping index:[a-z] -> [0-25]
             int index = word.charAt(i) - 'a';
             // not present
             if(current.children[index] == null)
@@ -62,7 +62,7 @@ class Trie {
         // iterate length
         for(int i=0; i<word.length(); i++){
 
-            // find index:[a-z] -> [0-25]
+            // Mapping index:[a-z] -> [0-25]
             int index = word.charAt(i) - 'a';
             // not present
             if(current.children[index] == null) return false;   
@@ -81,7 +81,7 @@ class Trie {
 
         // iterate prefix
         for(int i=0; i<prefix.length(); i++){
-            // find index:[a-z] -> [0-25]
+            // Mapping index:[a-z] -> [0-25]
             int index = prefix.charAt(i) - 'a';
 
             // not present

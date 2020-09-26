@@ -1,3 +1,4 @@
+#https://leetcode.com/problems/longest-word-in-dictionary
 #// Time Complexity :
 #// Space Complexity :
 #// Did this code successfully run on Leetcode :
@@ -6,44 +7,43 @@
 #// Your code here along with comments explaining your approach
 charToIndex = (char) -> char.charCodeAt() - 'a'.charCodeAt()
 
-TrieNode = () -> Object.assign(
-  Object.create(TrieNode::),
+Trie = () -> Object.assign(
+  Object.create(Trie::),
   children: Array(26)
   word: ''
 )
 
-Trie = () -> Object.assign(
-  Object.create(Trie::),
-  root: TrieNode()
-)
+Trie::insert = (word) ->
+  curr = @
 
-Trie::insert = (words) ->
-  for word of words
-    curr = @root
-    for x in [0...word.length]
-      if !curr.children[charToIndex(words[x])]?
-        curr.children[charToIndex(words[x])] = Trie()
+  for x in [0...word.length]
+    ch = word[x]
 
-      curr = curr.children[charToIndex(words[x])].root
+    if !curr.children[charToIndex(ch)]?
+      curr.children[charToIndex(ch)] = Trie()
 
-    curr.word = word
+    curr = curr.children[charToIndex(ch)]
 
-result = ''
+  curr.word = word
 
-dfs = (root) ->
+dfs = (root, result) ->
   if root.word.length > result.length
-    result = root.word
+    result.push(root.word)
 
   for i in [0...26]
-    dfs(root.children[i]) if !root.children[i] and root.children[i].word isnt ''
+    dfs(root.children[i], result) if root.children[i] && root.children.word isnt ''
 
 longestWord = (words) ->
   return '' if !words? or words.length is 0
 
-  root = Trie().root
+  root = Trie()
 
-  root.insert(words)
+  words.forEach (word) ->
+    root.insert(word)
 
-  dfs(root)
+  result = []
+  dfs(root, result)
+  result[result.length-1]
 
-  result
+longestWord(["w"])
+#longestWord(["w","wo","wor","worl", "world"])

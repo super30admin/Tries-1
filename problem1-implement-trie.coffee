@@ -1,3 +1,4 @@
+#https://leetcode.com/problems/implement-trie-prefix-tree/
 #// Time Complexity :
 #// Space Complexity :
 #// Did this code successfully run on Leetcode :
@@ -9,19 +10,14 @@
 
 charToIndex = (char) -> char.charCodeAt() - 'a'.charCodeAt()
 
-TrieNode = () -> Object.assign(
-  Object.create(TrieNode::),
+Trie = () -> Object.assign(
+  Object.create(Trie::),
   children: Array(26)
   isWord: false
 )
 
-Trie = () -> Object.assign(
-  Object.create(Trie::),
-    root: TrieNode()
-)
-
 Trie::insert = (word) ->
-  curr = @root
+  curr = @
 
   for x in [0...word.length]
     ch = word[x]
@@ -29,12 +25,12 @@ Trie::insert = (word) ->
     if !curr.children[charToIndex(ch)]?
       curr.children[charToIndex(ch)] = Trie()
 
-    curr = curr.children[charToIndex(ch)].root
+    curr = curr.children[charToIndex(ch)]
 
   curr.isWord = true
 
 Trie::search = (word) ->
-  curr = @root
+  curr = @
 
   for x in [0...word.length]
     ch = word[x]
@@ -42,12 +38,12 @@ Trie::search = (word) ->
     if !curr.children[charToIndex(ch)]?
       return false
 
-    curr = curr.children[charToIndex(ch)].root
+    curr = curr.children[charToIndex(ch)]
 
   curr.isWord
 
 Trie::startsWith = (prefix) ->
-  curr = @root
+  curr = @
 
   for x in [0...prefix.length]
     ch = prefix[x]
@@ -55,7 +51,7 @@ Trie::startsWith = (prefix) ->
     if !curr.children[charToIndex(ch)]?
       return false
 
-    curr = curr.children[charToIndex(ch)].root
+    curr = curr.children[charToIndex(ch)]
 
   true
 

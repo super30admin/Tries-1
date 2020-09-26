@@ -1,55 +1,45 @@
+//https://leetcode.com/problems/longest-word-in-dictionary
 //// Time Complexity :
 //// Space Complexity :
 //// Did this code successfully run on Leetcode :
 //// Any problem you faced while coding this :
 
 //// Your code here along with comments explaining your approach
-var Trie, TrieNode, charToIndex, dfs, longestWord, result;
+var Trie, charToIndex, dfs, longestWord;
 
 charToIndex = function(char) {
   return char.charCodeAt() - 'a'.charCodeAt();
 };
 
-TrieNode = function() {
-  return Object.assign(Object.create(TrieNode.prototype), {
+Trie = function() {
+  return Object.assign(Object.create(Trie.prototype), {
     children: Array(26),
     word: ''
   });
 };
 
-Trie = function() {
-  return Object.assign(Object.create(Trie.prototype), {
-    root: TrieNode()
-  });
-};
-
-Trie.prototype.insert = function(words) {
-  var curr, j, ref, results, word, x;
-  results = [];
-  for (word in words) {
-    curr = this.root;
-    for (x = j = 0, ref = word.length; (0 <= ref ? j < ref : j > ref); x = 0 <= ref ? ++j : --j) {
-      if (curr.children[charToIndex(words[x])] == null) {
-        curr.children[charToIndex(words[x])] = Trie();
-      }
-      curr = curr.children[charToIndex(words[x])].root;
+Trie.prototype.insert = function(word) {
+  var ch, curr, j, ref, x;
+  curr = this;
+  for (x = j = 0, ref = word.length; (0 <= ref ? j < ref : j > ref); x = 0 <= ref ? ++j : --j) {
+    ch = word[x];
+    if (curr.children[charToIndex(ch)] == null) {
+      curr.children[charToIndex(ch)] = Trie();
     }
-    results.push(curr.word = word);
+    curr = curr.children[charToIndex(ch)];
   }
-  return results;
+  return curr.word = word;
 };
 
-result = '';
-
-dfs = function(root) {
+dfs = function(root, result) {
   var i, j, results;
   if (root.word.length > result.length) {
-    result = root.word;
+    result.push(root.word);
   }
   results = [];
   for (i = j = 0; j < 26; i = ++j) {
-    if (!root.children[i] && root.children[i].word !== '') {
-      results.push(dfs(root.children[i]));
+    if (root.children[i] && root.children.word !== '') {
+      results.push(dfs(root.children[i], result));
     } else {
       results.push(void 0);
     }
@@ -58,14 +48,21 @@ dfs = function(root) {
 };
 
 longestWord = function(words) {
-  var root;
+  var result, root;
   if ((words == null) || words.length === 0) {
     return '';
   }
-  root = Trie().root;
-  root.insert(words);
-  dfs(root);
-  return result;
+  root = Trie();
+  words.forEach(function(word) {
+    return root.insert(word);
+  });
+  result = [];
+  dfs(root, result);
+  return result[result.length - 1];
 };
+
+longestWord(["w"]);
+
+//longestWord(["w","wo","wor","worl", "world"])
 
 //# sourceMappingURL=problem2-longest-word-in-dictionary.js.map

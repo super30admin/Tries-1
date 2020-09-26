@@ -1,10 +1,16 @@
 //https://leetcode.com/problems/longest-word-in-dictionary
-//// Time Complexity :
-//// Space Complexity :
-//// Did this code successfully run on Leetcode :
+//// Time Complexity : O(N^N)
+//// Space Complexity : O(N^N)
+//// Did this code successfully run on Leetcode : yes and no :( there's a bug for some cases
 //// Any problem you faced while coding this :
 
+// hard to debug
+
 //// Your code here along with comments explaining your approach
+
+// insert each word in the trie
+// traverse each trie child, stop when .word is ''
+// return the last word
 var Trie, charToIndex, dfs, longestWord;
 
 charToIndex = function(char) {

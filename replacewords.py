@@ -1,3 +1,7 @@
+SC:O(n)
+TC:O(n)
+    
+    
 class Node:
     
     def __init__(self):

@@ -1,0 +1,18 @@
+// They haven't clearly specified in the question that whether smallest word in the array will always be single // // character; or it can be a larger length string from where other strings start building
+// Time complexity: O(log n); space complexity: O(n)
+class Solution {
+    public String longestWord(String[] words) {
+        Arrays.sort(words);
+        String result = "";
+        System.out.println(Arrays.asList(words));
+        HashSet<String> set = new HashSet<>();
+        
+        for(int i = 0; i < words.length; i++){
+            if( words[i].length() == 1 || set.contains(words[i].substring(0, words[i].length()-1))){
+                set.add(words[i]);
+                result = words[i].length() > result.length() ? words[i] : result; 
+            }
+        }
+        return result;
+    }
+}

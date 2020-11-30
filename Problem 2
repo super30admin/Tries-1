@@ -1,0 +1,68 @@
+class Trie
+{
+    Trie[] children = new Trie[26];
+    boolean isWord = false;
+}
+class Solution {
+    public String replaceWords(List<String> dict, String sentence) {
+        
+        Trie root = new Trie();
+        
+        //BUILDING TRIE 
+        for(String str : dict)
+        {
+            Trie node = root;
+            
+            for(char c : str.toCharArray())
+            {
+                if(node.children[c- 'a'] == null )
+                    node.children[c- 'a'] =new Trie();
+            node = node.children[c-'a'];
+            }
+            
+            node.isWord = true;
+               
+        }
+        
+        
+        // Checking prefixes and replacing them in string
+        String result = new String();
+        for(String str : sentence.split(" "))
+        {
+            Trie node = root;
+            StringBuilder sb = new StringBuilder();
+            for(char c2 : str.toCharArray())
+            {
+                if(node.children[c2 - 'a'] != null && !node.isWord)
+                {
+                     sb.append(c2); 
+                    node = node.children[c2 - 'a'];
+                }  
+                else
+                    break;
+            }
+            
+            //Add new word to string
+            if(sb!=null && node.isWord)
+            {
+                if(result.isEmpty())
+                    result += sb.toString();
+                else
+                    result += " " + sb.toString();
+            }
+            
+            //Successor not found , add original string
+            else 
+            {
+                if(result.isEmpty())
+                    result += str;
+                else
+                    result +=" " + str;
+            }
+                
+        }
+        
+        return result;
+        
+    }
+}

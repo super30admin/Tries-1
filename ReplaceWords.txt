@@ -1,0 +1,51 @@
+# TC - O(n + m), where n is the sum of all lengths of all roots and m is the sum of all lengths of all words in sentence
+# SC - O(maxLen(words_of_roots, words_in_sentence))
+# Ran on LC - Yes
+
+# Add all the roots to the Trie
+# Convert sentence to a list - toList
+# Go through toList and only consider the current word if the first letter is present in the first level of Trie
+# Keep appending letters to a tempList and break when isEnd is True
+
+class Trie:
+    class Node:
+        def __init__(self, isEnd=False):
+            self.isEnd = isEnd
+            self.children = [None for _ in range(26)]
+
+    def __init__(self):
+        self.trie = self.Node()
+
+    def insert(self, word: str) -> None:
+        trie = self.trie
+        for i in range(len(word)):
+            if trie.children[ord(word[i])-97] is None:
+                trie.children[ord(word[i])-97] = self.Node() 
+            trie = trie.children[ord(word[i])-97]
+        trie.isEnd = True
+        return
+    
+class Solution:
+    
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        if not dictionary or not sentence:
+            return sentence
+        roots = Trie()
+        for root in dictionary:
+            roots.insert(root)
+        toList = sentence.split(" ")
+        for i in range(len(toList)):
+            if roots.trie.children[ord(toList[i][0])-97] is None:
+                continue
+            cur = roots.trie.children[ord(toList[i][0])-97]
+            word = [toList[i][0]]
+            for j in range(1, len(toList[i])):
+                if cur.isEnd == True:
+                    toList[i] = ''.join(word)
+                    break
+                if cur.children[ord(toList[i][j])-97] is None:
+                    break
+                if cur.children[ord(toList[i][j])-97] is not None:
+                    word.append(toList[i][j])
+                    cur = cur.children[ord(toList[i][j])-97]
+        return " ".join(toList)

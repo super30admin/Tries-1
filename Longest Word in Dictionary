@@ -1,0 +1,56 @@
+//TC: O(N * P) ??  N = no of words && P = Avg. length of each word
+//SC: O(N * P) ??
+
+//Approach: Idea is to use Tries DS by inserting words from array into Tries
+//Use Queue to add all elemts at each level and perform level traversal and store string at each level
+
+class Solution {
+
+    class TrieNode{
+        String word;
+        TrieNode[] children;
+        
+        public TrieNode(){
+            children = new TrieNode[26];
+        }
+    }
+    
+    TrieNode root;
+    public String longestWord(String[] words) {
+        if(words.length==0 || words==null){
+            return "";
+        }
+        
+        root = new TrieNode();
+        for(String word : words){
+            insert(word);
+        }
+        Queue<TrieNode> que = new LinkedList<>(); 
+        que.add(root);
+        TrieNode curr = root;
+        while(!que.isEmpty()){
+            curr = que.poll();
+            // System.out.println(curr);
+            for(int i = 25 ; i >= 0 ; i--){   //RIGHT 2 LEFT traverse for lexicographically smallest
+                if(curr.children[i]!=null && curr.children[i].word !=null){
+                    que.add(curr.children[i]);
+                }
+            }
+        }
+        return curr.word;
+    }
+
+    private void insert(String word){
+        TrieNode curr = root;
+        // StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i < word.length() ; i++){
+            char c = word.charAt(i);
+            // sb.append(c);
+            if(curr.children[c - 'a']==null){
+                curr.children[c - 'a'] = new TrieNode();
+            }
+            curr = curr.children[c - 'a'];   
+        }
+        curr.word = word;
+    }
+}

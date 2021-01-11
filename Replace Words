@@ -1,0 +1,72 @@
+//TC: O(N * P) ?? -> N= Length of Word dictionary && P = Average length of ach word
+//SC: O(N * P) ??
+
+//Aprroach: Idea is to transform dictionary into Tries DS and traverse through each string to check if substring is present in dictionary or not
+//If substring present, finalString.append(dictionaryString) -> else finalString.append(currentString)
+
+class Solution {  
+    class TrieNode{
+        boolean lastChar;
+        TrieNode[] children;
+        
+        public TrieNode(){
+            children = new TrieNode[26];
+        }
+    }
+    
+    TrieNode root;
+    public String replaceWords(List<String> dictionary, String sentence) {  
+        root = new TrieNode();
+        for(String word : dictionary){
+            insert(word);   //Adding all strings to trie   
+        }
+        
+        String[] sArray = sentence.split("\\s+");
+        StringBuilder finalString = new StringBuilder();
+        StringBuilder intermediate = new StringBuilder();
+        TrieNode curr = root;
+        
+        //Traversing the string[] of sentence
+        for(int i = 0 ; i < sArray.length ; i++){
+            if(i > 0){
+                finalString.append(" ");    //to avoid leading space
+            }
+            
+            //resetting every time for each string 
+            intermediate = new StringBuilder();
+            //resetting current to start from root
+            curr = root;
+            
+            //Traversing currString in String[]
+            for(int j = 0 ;j < sArray[i].length() ; j++){
+                char ch = sArray[i].charAt(j);
+                if(curr.children[ch - 'a'] == null || curr.lastChar==true){
+                    // finalString.append(intermediate);
+                    break;
+                }  
+                //else if match found in trie
+                intermediate.append(ch);
+                curr = curr.children[ch - 'a'];
+            }
+            
+            if(curr.lastChar==true){
+                finalString.append(intermediate);
+            }else{
+                finalString.append(sArray[i]);
+            }
+        }
+        return finalString.toString();
+    }
+    
+    public void insert(String word){
+        TrieNode curr = root;
+        for(int i = 0 ; i < word.length() ; i++){
+            char c = word.charAt(i);
+            if(curr.children[c-'a']==null){
+                curr.children[c - 'a'] = new TrieNode();
+            }
+            curr = curr.children[c - 'a'];
+        }
+        curr.lastChar = true;
+    }
+}

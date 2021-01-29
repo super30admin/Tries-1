@@ -1,0 +1,100 @@
+
+class Node:
+    def __init__(self,val):
+        self.val = val;
+        self.adjacentlist = [None for i in range(26)];
+        self.end = False;
+
+class Trie:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.head = [None for i in range(26)];
+    
+    
+
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        n = len(word)
+        idx = ord(word[0]) - 97;
+        if(not self.head[idx]):
+            self.head[idx] = Node(word[0]);
+        if(n == 1):
+            self.head[idx].end= True;
+        curr = self.head[idx].adjacentlist
+        i = 1
+        
+        while(i < len(word)):
+            idx = ord(word[i]) - 97;
+            if(not curr[idx]):
+                curr[idx] = Node(word[i]);
+            if( i== n-1):
+                curr[idx].end = True;
+            curr = curr[idx].adjacentlist;
+            i += 1;
+            
+
+        
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie.
+        """
+        n = len(word)
+        idx = ord(word[0]) - 97;
+        if(not self.head[idx]):
+            return False
+        curr = self.head
+        i = 0
+        
+        while(i < len(word)):
+            idx = ord(word[i]) - 97;
+            if(not curr[idx]):
+                return False
+            if( i== n-1):
+                if(not curr[idx].end):
+                    return False;
+                else:
+                    return True;
+            curr = curr[idx].adjacentlist;
+            i += 1;
+        
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        """
+        
+        n = len(prefix)
+        idx = ord(prefix[0]) - 97;
+        if(not self.head[idx]):
+            return False
+        curr = self.head
+        i = 0
+        
+        while(i < n):
+            idx = ord(prefix[i]) - 97;
+            if(not curr[idx]):
+                return False
+            curr = curr[idx].adjacentlist;
+            i += 1;
+        return True
+        '''
+        l = sum of the lengths of all words
+        time complexity = O(l);
+        space complexity = O(l*26)
+        
+        '''
+       
+        
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)

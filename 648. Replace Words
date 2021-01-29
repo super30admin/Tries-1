@@ -1,0 +1,81 @@
+class Node:
+    def __init__(self, val):
+        self.val = val;
+        self.adjacentlist = [None for i in range(26)];
+        self.end = False;
+
+
+# trie data structure to store the root words
+
+class Trie:
+    def __init__(self):
+        self.head = [None for i in range(26)];
+    
+    # function to insert a word
+    def insert(self, word):
+        n = len(word);
+        curr = self.head;
+        idx = ord(word[0]) - 97;
+        if(not curr[idx]):
+            curr[idx] = Node(word[0]);
+            
+        if(n == 1):
+            curr[idx].end = True;
+        curr = curr[idx].adjacentlist;
+        
+        i = 1;
+        
+        while(i < n):
+            idx = ord(word[i]) - 97;
+            if(not curr[idx]):
+                curr[idx] = Node(word[i]);
+                
+            # whenever the current character is last letter of the word, set the end status of the node as true to indicate a word 
+            if(i == n-1):
+                curr[idx].end = True
+            curr= curr[idx].adjacentlist;
+            i += 1;
+    
+    def startsWith(self, word):
+        n = len(word);
+        i = 0;
+        curr = self.head;
+        while(i < n):
+            idx = ord(word[i]) - 97;
+            if(not curr[idx]):
+                return ''
+            elif(curr[idx].val == word[i] and curr[idx].end):
+                return word[:i+1];
+            curr = curr[idx].adjacentlist;
+            i += 1;
+        return ''
+            
+
+
+class Solution:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        obj = Trie();
+        # build the trie data structure for the dictionary of words
+        for word in dictionary:
+            obj.insert(word);
+        output = sentence.split(' ');
+        
+        # invoke startswith function of trie to check for the root words
+        for i in range(len(output)):
+            temp = obj.startsWith(output[i]);
+            # if any root word exists, replace current word with root word.
+            if(temp != ''):
+                output[i] = temp;
+        return ' '.join(output);
+        
+        """
+        
+     l  = sum of the lengths of all the words of dictionary
+     time complexity = O(l);
+     space complexity = O(l*26)
+          
+        """
+      
+        
+        
+        

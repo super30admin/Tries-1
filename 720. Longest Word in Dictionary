@@ -1,0 +1,86 @@
+# create a node with the character value
+class Node:
+    def __init__(self, val):
+        self.val = val;
+        self.adjacentlist = [None for i in range(26)];
+        self.end = False;
+
+        
+# create a trie data structure to store the words
+class Trie:
+    def __init__(self):
+        
+        # head node contains 26 alphabet nodes
+        self.head = [None for i in range(26)];
+        self.maxstring = ''
+        self.maxlen = 0
+    
+    
+    # function to insert the word
+    def insert(self, word):
+        count = 0
+        n = len(word);
+        
+        # fidn the index of the word 
+        idx = ord(word[0]) - 97;
+        curr = self.head
+        if(not curr[idx]):
+            curr[idx] = Node(word[0]);
+        if(n == 1):
+            curr[idx].end = True;
+            if(1 > self.maxlen):
+                self.maxlen = 1;
+                self.maxstring = word
+        if(curr[idx].end):
+            count = 1
+            
+        curr = curr[idx].adjacentlist;
+        
+        i = 1;
+        
+        # scan all the characters of the word
+        while(i < n):
+            idx = ord(word[i]) - 97;
+            # if curr character node not present, the create a newnode with that character
+            if(not curr[idx]):
+                curr[idx] = Node(word[i]);
+            # if the current character is last letter of word, set the status end as true to indicate a existing word
+            if(i == n-1):
+                curr[idx].end = True;
+            
+            # increment the count of words if the path from first letter to curr character is a valid word 
+            if(curr[idx].end):
+                count += 1;
+            curr = curr[idx].adjacentlist;
+            i += 1;
+            #print(count)
+            
+        # if all the path contains valid words
+        if(count == len(word)): 
+            # check whether current word forms a maximum length string 
+            if(count > self.maxlen):
+                self.maxlen = count;
+                self.maxstring = word
+        #print(count, word, self.maxstring)
+        
+
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        
+        # sort the words based on the length of the word
+        words = sorted(words, key = lambda x:(len(x),x))
+        #print(words)
+        
+        obj = Trie()
+        for word in words:
+            obj.insert(word)
+        return obj.maxstring
+    
+    
+    '''
+    l = sum of lengths of all the words
+    Time complexity = O(l)
+    space complexity = O(l)
+    
+    '''
+        

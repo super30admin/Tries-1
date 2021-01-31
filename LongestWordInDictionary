@@ -1,0 +1,57 @@
+//Time Complexity: o(mn) m is max length of the words, n is no of words
+//Space Complexity: o(mn) we can ignore queue space bcs <= mn
+//Leetcode: Yes
+class Solution {
+    //create data structure 
+    class TrieNode {
+        TrieNode [] children;
+        //we need to return word at the end so used String instead boolean
+        String trieWord;
+        
+        public TrieNode(){
+            //initialized children
+            children = new TrieNode[26];
+        }
+    }
+    
+    TrieNode root;
+    //Insert Each word to our Trie data structure
+    private void insert(String word){
+        TrieNode curr = root;
+        for(int i = 0; i< word.length();i++){
+            char c = word.charAt(i);
+            //if that children is note present create a new node 
+            if(curr.children[c-'a'] == null) {
+                curr.children[c-'a'] = new TrieNode();
+            }
+            curr = curr.children[c-'a'];
+        }
+        //end of the word set it to trieNode
+        curr.trieWord = word;
+    }
+    
+    public String longestWord(String[] words) {
+        root = new TrieNode();
+        for(int i = 0; i<words.length;i++){
+            insert(words[i]);
+        }
+        //BFS to traverse the Trie
+        Queue<TrieNode> q = new LinkedList<>();
+        TrieNode curr = root;
+        //add curr node to queue
+        q.add(curr);
+        while(!q.isEmpty()) {
+            //poll the first node from queue
+            curr = q.poll();
+            //traverse from the end bcs we need to return the smallest lexicographical order
+            for(int i =25; i>=0;i--){
+                //only add childrens those have word at particular node
+                if(curr.children[i] != null && curr.children[i].trieWord != null) {
+                    q.add(curr.children[i]);
+                }
+            }
+        }
+        //return the last trieWord
+        return curr.trieWord;
+    }
+}

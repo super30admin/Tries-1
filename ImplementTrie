@@ -1,0 +1,83 @@
+//Time Complexity - o(n) n is string length for each operation
+//space complexity - o(1) not using any space to compute
+class Trie {
+    
+    //create data structure
+    class TrieNode {
+        //need 26 array childrens for each node
+        TrieNode [] children;
+        //need this to check word is present or not
+        boolean isEnd;
+        
+        //construct object at class loading time
+        public TrieNode() {
+            children = new TrieNode [26];
+        }
+    }
+
+    TrieNode root;
+    /** Initialize your data structure here. */
+    public Trie() {
+        //initialize TrieNode
+        root = new TrieNode();
+        
+    }
+    
+    /** Inserts a word into the trie. */
+    public void insert(String word) {
+        TrieNode curr = root;
+        
+        for(int i =0; i<word.length();i++){
+            char c = word.charAt(i);
+            //if at that index node is not present create new TrieNode
+            if(curr.children[c-'a'] == null) {
+                curr.children[c-'a'] = new TrieNode();
+            }
+            //move curr pointer to the next children
+            curr = curr.children[c-'a'];
+        }
+        //at the end of the word make isEnd true
+        curr.isEnd = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    public boolean search(String word) {
+        TrieNode curr = root;
+        for(int i = 0; i<word.length();i++){
+            char c = word.charAt(i);
+            //if at that index node is not present return false
+            if(curr.children[c-'a'] == null) {
+                return false;
+            }
+            //move curr pointer to specific child
+            curr = curr.children[c-'a'];    
+        }
+        //check for the end of the char isEnd is true or not
+        //if isEnd is true word is present
+        return curr.isEnd;
+        
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    public boolean startsWith(String prefix) {
+        TrieNode curr = root;
+        for(int i =0; i< prefix.length();i++){
+            char c = prefix.charAt(i);
+            //if node is not present at curr index means prefix is not there return false
+            if(curr.children[c-'a'] == null) {
+                return false;
+            }
+            curr = curr.children[c-'a'];
+        }
+        //if none time we are hitting false means prefix exist so return true 
+        return true;
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */

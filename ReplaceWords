@@ -1,0 +1,67 @@
+//Time complexity: o(mn+kl) n = no of words in dictionary m = max length of dictionary words, k = no of words in sentence, l = max length of word in sentence
+//Space Complexity: o(mn)
+//LeetCode: Yes
+class Solution {
+    //create trieNode
+    class TrieNode {
+        TrieNode [] children;
+        //to check end of the word
+        boolean isEnd;
+        public TrieNode(){
+            children = new TrieNode[26];
+        }
+    }
+    TrieNode root;
+    //insert all the dictionary words
+    private void insert(String word){
+        TrieNode curr = root;
+        for(int i =0; i<word.length();i++){
+            char c = word.charAt(i);
+            if(curr.children[c-'a'] == null){
+                curr.children[c-'a'] = new TrieNode();
+            }
+            curr = curr.children[c-'a'];
+        }
+        curr.isEnd = true;
+    }
+    
+    
+    public String replaceWords(List<String> dictionary, String sentence) {
+        root = new TrieNode();
+        //insert dictionary words
+        for(String word:dictionary){
+            insert(word);
+        }
+        //split sentence with spaces
+        String [] words = sentence.split("\\s+");
+        StringBuilder sb  = new StringBuilder();
+        StringBuilder replace = new StringBuilder();
+        
+        //look for words in our TrieNodes
+        for(int k=0;k<words.length;k++) {
+            String word = words[k];
+            replace = new StringBuilder();
+            TrieNode curr = root;
+            for(int i =0; i<word.length();i++){
+                char c = word.charAt(i);
+                //if character is not present return else keep traversing
+                if(curr.children[c-'a'] == null || curr.isEnd)
+                    break;
+                //keep appending character to replace sb to replace at the end
+                replace.append(c);
+                curr = curr.children[c-'a'];
+            }
+            //last curr's isEnd is true add replace string if not thn add actual word
+            if(curr.isEnd){
+                sb.append(replace);
+            } else {
+                sb.append(word);
+            }
+            //add space after each word except last word of the sentence
+            if(k != words.length-1){
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+}

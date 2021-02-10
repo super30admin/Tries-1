@@ -1,4 +1,5 @@
 class Solution {
+    
     public String longestWord(String[] words) {
         if (words == null || words.length == 0)
             return "";
@@ -19,7 +20,7 @@ class Solution {
                 if (cur.children[idx] != null) {
                     cur = cur.children[idx];
                 } else {
-                    if (i < s.length() - 1) //special operation (refer to explaination above)
+                    if (i < s.length() - 1) 
                         return;
                     cur.children[idx] = new Trie();
                     cur = cur.children[idx];

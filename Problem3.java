@@ -1,7 +1,7 @@
 //Time complexity-O(max length of string)
 //Space complexity-O(length of unique prefix + number of suffix)
-//Ran on leetcode:No
-//Solution with comments- Failing some testcases
+//Ran on leetcode:Yes
+//Solution with comments- 
 class Solution {
     class TrieNode{
         TrieNode[] children;
@@ -14,33 +14,32 @@ class Solution {
     }
     TrieNode root= new TrieNode();
     
-     public void insert(List<String> dict){
+     public void insert(List<String> dict){//insert to trie and this willl update the smallest prefix as well.
          for(String word : dict){
              TrieNode curr=root;
              for(char c: word.toCharArray()){
-                 if(curr.children[c-'a']==null){
-                     curr.children[c-'a']= new TrieNode();
+                if(curr.children[c-'a']==null){
+                    curr.children[c-'a']= new TrieNode();
                  }
-                 
                  curr=curr.children[c-'a'];
-                 
              }
              curr.str=word;
          }
      }
     
-    public void search(TrieNode curr, String word){//search the root word else return
-        int count=0;
+    public void search(TrieNode curr, String word){
        for(char c : word.toCharArray() ){
-           if(curr.children[c-'a']!=null){
-               count++;
+           if(curr.children[c-'a']==null ||!curr.str.equals("")){//If we reached to the end of trie path  or prefix length is exhausted
+               break;
+           }
+           else if(curr.children[c-'a']!=null){
                curr=curr.children[c-'a'];
            }
        }
-        if(count==curr.str.length())
-            output+=curr.str+" ";
-        else 
-            output+=word+" ";
+        if(curr.str.equals(""))//if no valid prefix found for sentecne word
+            output+=word+" ";    
+        else
+            output+=curr.str+" ";//if prefix is found
         return;
     }
     

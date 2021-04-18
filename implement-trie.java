@@ -1,5 +1,5 @@
 // Time: O(length of word)
-// Space: O(total number of characters * 26)
+// Space: O(total unique prefixes + total unique suffixes) 
 
 class TrieNode{
   TrieNode[] children;

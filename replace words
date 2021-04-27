@@ -1,0 +1,97 @@
+// Time Complexity :O(n)
+// Space Complexity : O(nk)
+// Did this code successfully run on Leetcode : yes
+// Any problem you faced while coding this :
+
+
+// Your code here along with comments explaining your approach
+class Solution {
+    
+    class TrieNode{
+        boolean isEnd;
+        TrieNode[] children;
+        public TrieNode()
+        {
+            isEnd = false;
+            children = new TrieNode[26];
+        }
+    }
+    
+    TrieNode root;
+    void insert(String word)
+    {
+        TrieNode curr = root;
+       // System.out.println(word);
+        for(int i=0; i < word.length(); i++)
+        {
+            char c = word.charAt(i);
+            if(curr.children[c-'a'] == null)
+            {
+                curr.children[c-'a'] = new TrieNode();
+            }
+            curr = curr.children[c-'a'];
+        }
+        curr.isEnd = true;
+    }
+    
+    public String replaceWords(List<String> dictionary, String sentence) {
+        
+        if(dictionary == null || dictionary.size() == 0)
+        {
+            return sentence;
+        }
+        
+        root = new TrieNode();
+        for(String word: dictionary)
+        {
+            insert(word);
+        }
+        
+        String[] sentArray = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
+        StringBuilder replace;
+        
+        for(int i=0; i<sentArray.length; i++)
+        {
+            if(i>0)
+                result.append(" ");
+           
+            String word = sentArray[i];
+            //System.out.println(word);
+            TrieNode curr = root;
+            replace = new StringBuilder();
+            for(int j=0; j < word.length(); j++)
+            {
+                
+                char c = word.charAt(j);
+                //System.out.println(c);
+                if(curr.children[c-'a'] == null || curr.isEnd)
+                {
+                    //System.out.println(curr.isEnd);
+                    break;
+                }
+                    
+                replace.append(c);
+                curr = curr.children[c-'a'];
+            }
+            if(curr.isEnd)
+            {
+               
+                result.append(replace.toString());
+                
+                //System.out.println("i = "+i +" result = "+result);
+                 
+            }
+            else
+            {
+                result.append(word);
+                
+                 //System.out.println("i = "+i +" result = "+result);
+                
+            }
+            
+        }
+        
+        return result.toString();
+    }
+}

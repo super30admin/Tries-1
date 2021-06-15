@@ -1,5 +1,6 @@
 # Space:- 26^m
 # time :- O(n)
+k
 class Trie:
     class TrieNode:
         def __init__(self):

@@ -24,61 +24,82 @@ S30 SlackID : RN32MAY2021
 #-----------------------
 # Ran Successfully?: Yes
 
+class TrieNode:
+    def __init__(self):
+        #isEnd stores whether there is a word
+        #in the dict that ends at THIS alphabet
+        self.isEnd = False
+        
+        #Children are lower-case english alphabet
+        #If child is 'a', then self.children[0] will not be None
+        #But hold another TrieNode()
+        self.children = [None for i in range(26)]
+
 class Solution:
     
-    class Trie:
-    
-        class TrieNode:
-            def __init__(self):
-                self.isEnd = False
-                self.children = [None for i in range(26)]
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        # Trie Class will have a Root TrieNode
+        # All the words in the dictionary will start here
+        self.root = TrieNode()
+        return
 
-        def __init__(self):
-            """
-            Initialize your data structure here.
-            """
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie.
+        """
+        curr = self.root
+        # print(curr.children)
+        for i in range(len(word)):
+            c = word[i]
+            if curr.children[ord(c) - ord('a')] is None:
+                # If TrieNode doesn't exist at this location, create one
+                # to add word to dictionary
+                curr.children[ord(c)-ord('a')] = TrieNode() 
+            # If the prefix already exists in the Trie
+            # go to child TrieNode
+            curr = curr.children[ord(c)-ord('a')]
+        
+        # Change isEnd to True to show that
+        # there is a word in the dictionary
+        # that ends at this node
+        curr.isEnd = True
 
-
-            self.root = self.TrieNode()
-            return
-
-        def insert(self, word: str) -> None:
-            """
-            Inserts a word into the trie.
-            """
-            curr = self.root
-            for i in range(len(word)):
-                c = word[i]
-                if curr.children[ord(c) - ord('a')] is None:
-                    curr.children[ord(c)-ord('a')] = self.TrieNode() 
-                curr = curr.children[ord(c)-ord('a')]
-
-            curr.isEnd = True
     
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
-        self.root = self.Trie()
+        # Solution() : Trie()
+        
         for word in dictionary:
-            self.root.insert(word)
+            self.insert(word)
         
         split_sent = sentence.split()
         result = []
+        
         for word in split_sent:
             replacement = ""
-            curr = self.root.root
+            curr = self.root
             for i in range(len(word)):
                 c = word[i]
+                
+                # Need to handle these two cases separately
                 if curr.children[ord(c)-ord('a')] is None or curr.isEnd:
-                    
                     break
+                
                 curr = curr.children[ord(c) - ord('a')]
                 replacement += c
-                
+            
+            # Handle the case where there is a root word
+            # in the Trie
             if curr.isEnd:
-                #Found smallest prefix in the sentence
+                # Append the root word as replacement in the
+                # resultant sentence
                 result.append(replacement)
 
+            # In any other case, keep the same word in the
+            # resultant sentence
             else:
-                #Didn't find prefix of word in dictionary
                 result.append(word)
         
         return " ".join(result)

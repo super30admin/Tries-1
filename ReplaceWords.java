@@ -1,5 +1,5 @@
-// Time Complexity: O(N) where N is the length of the sentence
-// Space Complexity: O(N) Size of trie
+// Time Complexity: O(Nxk + Lxk) where N is the length of dictionary, k is the max length of word in that dictionary and L is the length of sentence
+// Space Complexity: O(Nxk) Size of trie
 // Run on leetcode: yes
 // Issues faced: need practice building and fetching the trie. Made too many silly mistakes and spent too much time correcting them.
 

@@ -7,7 +7,7 @@ Time Complexity :
 Space Complexity : 
 1. Insert : O(L), L=Length of longest word
 2. Search : O(1)
-3. Prfix  : O(1)
+3. Prefix  : O(1)
 
 Did this code successfully run on Leetcode : Yes
 */

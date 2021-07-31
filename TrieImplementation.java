@@ -2,7 +2,7 @@
 Time Complexity : 
 1. Insert : O(L), L=Length of longest word
 2. Search : O(L), L=Length of longest word
-3. Prfix  : O(P), L=Length of longest prefix
+3. Prefix  : O(P), L=Length of longest prefix
 
 Space Complexity : 
 1. Insert : O(L), L=Length of longest word

@@ -1,11 +1,6 @@
 # 208. Implement Trie (Prefix Tree)
 # https://leetcode.com/problems/implement-trie-prefix-tree/
 
-# Logic: 
-
-# Time Complexiety: 
-# Space Complexiety: 
-
 class trieNode:
     def __init__(self):
         self.isEnd = False
@@ -15,6 +10,8 @@ class Trie:
     def __init__(self):
         self.root = trieNode()
 
+    # Time Complexiety: O(len(word))
+    # Space Complexiety: O(len(word))
     def insert(self, word: str) -> None:
         curr = self.root
         for i in word:
@@ -23,6 +20,8 @@ class Trie:
             curr = curr.children[i]
         curr.isEnd = True
 
+    # Time Complexiety: O(len(word))
+    # Space Complexiety: O(1)
     def search(self, word: str) -> bool:
         curr = self.root
         for i in word:
@@ -31,6 +30,8 @@ class Trie:
             curr = curr.children[i]
         return curr.isEnd == True
 
+    # Time Complexiety: O(len(prefix))
+    # Space Complexiety: O(1)
     def startsWith(self, prefix: str) -> bool:
         curr = self.root
         for i in prefix:

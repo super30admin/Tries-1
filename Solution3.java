@@ -1,6 +1,6 @@
 import java.util.List;
 
-// Time Complexity O(m*n) for ibuilding the dictionary+O(kl)(k words in a sentence with average length l)
+// Time Complexity O(m*n) for building the dictionary+O(kl)(k words in a sentence with average length l)
 // Space Complexity :O(m*n*26) for each character we have an array of 26 length and one bool variable+O(kl) for string array (k words in a  sentence with average length l)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this :No 
@@ -52,6 +52,7 @@ import java.util.List;
             if(curr.children[c-'a']==null || curr.isEnd==true ){
                 break;
             }
+
                 replacement.append(c);
                 curr= curr.children[c-'a'];
         }

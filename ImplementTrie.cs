@@ -1,12 +1,16 @@
-public class Trie {
+//Inserting
+//Time: O(n)
+//Space: Number of nodes added
 
+public class Trie {
+    
     class TrieNode
     {
+        //signifies end of word
         public bool IsEnd { get; set; }
         public TrieNode[] Children { get; set; }
         public TrieNode()
         {
-            //given lowecase characters. Ask this in interview if not mentioned.
             Children = new TrieNode[26];
         }
     }

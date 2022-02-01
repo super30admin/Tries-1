@@ -1,6 +1,7 @@
 //Time complexity : mk + nl where m is total number of words in sentence and k is length of words 
 // n is total number of words in dictionary and l is length of the words
 // space complexity is nl
+import java.io.*;
 
 class Solution {
     class TrieNode{
@@ -15,10 +16,12 @@ class Solution {
         TrieNode curr = root; // created a pointer to the node/container root
         for(int i=0; i< word.length(); i++){
             char c = word.charAt(i);
-            if(curr.children[c-'a']==null){ //checks everytime if curr is pointing to a new word
-               curr.children[c-'a']= new TrieNode(); // if the word is new then allocate memory of trieNode[26] 
+            if(curr.children[c-'a']==null){ //checks everytime if there is a children present at defined index for that char
+               curr.children[c-'a']= new TrieNode(); // if not then creates a node at index 2 (for b)
             }
-            curr=curr.children[c-'a'];
+            System.out.println(c-'a');
+            curr=curr.children[c-'a']; // pointer current is moved to where newly added nod resides
+            //System.out.println(curr.children[c-'a']);
         }
         curr.isEnd = true;
     }
@@ -37,8 +40,8 @@ class Solution {
             TrieNode curr = root;
             for(int j = 0; j < word.length(); j++){
                 char c= word.charAt(j);
-                if(curr.children[c-'a']==null || curr.isEnd) break; //if the character does not match or last char is reached to the end
-                curr = curr.children[c-'a']; //if any above case not true then keep adding char to replacement string
+                if(curr.children[c-'a']==null || curr.isEnd) break; //if the character does not exist at that index or last char is reached to the end
+                curr = curr.children[c-'a']; //if valid then move pointer to children node
                 replacement.append(c); // if trie has TINY snd word is THE then replacement will have T stored in it
             }
             if(curr.isEnd){

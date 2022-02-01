@@ -1,3 +1,14 @@
+/** Time Complexity : O(n*l) l=> length of the word
+ Space Complexity : O(n*l)
+ Did this code successfully run on Leetcode :yes
+ Any problem you faced while coding this : no
+
+ Approach 
+
+ We first create Trie for this
+ Then add the words into the trie
+ We then use bfs by adding the children into the queue and then when we reach the end we return the word
+ **/
 class Solution {
         class TrieNode{
             TrieNode[] children;

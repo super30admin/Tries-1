@@ -1,3 +1,5 @@
+# SC : O(NL)
+# TC : O(NL)
 class TrieNode:
     def __init__(self):
         self.isEnd = False
@@ -14,7 +16,6 @@ class Trie:
         for char in word:
             if node.child[ord(char) - ord('a')] == None:
                 node.child[ord(char) - ord('a')] = TrieNode()
-                
             node = node.child[ord(char) - ord('a')]
         node.isEnd = True
         

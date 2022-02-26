@@ -1,0 +1,63 @@
+class Solution {
+    
+    TrieNode root;
+    String longest;
+    public String longestWord(String[] words) {
+        
+        if(words == null || words.length == 0)
+            return "";
+        
+        root = new TrieNode();
+        longest = "";
+        for(String word : words)
+            insert(word);
+        
+        Queue<TrieNode> queue = new LinkedList<>();
+        queue.add(root);
+        TrieNode current = null;
+        while(!queue.isEmpty()){
+            current = queue.poll();
+            
+            
+            
+            for(int i=current.children.length-1;i>=0;i--){
+                if(current.children[i] != null && current.children[i].isEnd){
+                    queue.add(current.children[i]);
+                }
+            }
+        }
+        
+        if(current.word != null) return current.word;
+        
+        return longest;
+        
+    }
+    
+    
+    private void insert(String word){
+        
+        TrieNode current = root;
+        for(int i=0;i<word.length();i++){
+            char c = word.charAt(i);
+            
+            if(current.children[c-'a'] == null){
+                current.children[c-'a'] = new TrieNode();
+            }
+            current = current.children[c-'a'];
+             
+        }
+        current.isEnd = true;
+        current.word = word;
+    }
+}
+
+class TrieNode{
+    String word;
+    boolean isEnd;
+    TrieNode[] children ;
+    
+    TrieNode(){
+       // ch ='';
+        children  = new TrieNode[26];
+    }
+}

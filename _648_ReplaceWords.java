@@ -1,3 +1,12 @@
+// Time Complexity : o(n *l + W) where l is the length of word being inserted and W is the length of string
+// Space Complexity : o(n *l) whre is n is number of words i dictionary and l is average length of word
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : No
+
+
+// Your code here along with comments explaining your approach
+// Approach, create TrieNode and perform operations in iterative fashion, at each step we need to check for root, if root found retrun root else whole word 
+
 class Solution {
 
     TrieNode root;

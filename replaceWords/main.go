@@ -2,7 +2,7 @@
     - toss the entire dictonary in a trie
     - then split sentence into a list
     - Loop over each word in split array
-    - Search for each character and form the replacement word
+    - Search for smallest possible word in trie 
     - If we successfully found a replacement, then replace append the replacement to a our resulting string builder
     - Finally return the string from string builder
     

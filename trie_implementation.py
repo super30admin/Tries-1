@@ -22,6 +22,7 @@ class Trie:
         you create a new TrieNode else you get to that child node 
         You are ultimately not inserting the string, but you are just indicating the presence of the 
         letter by inserting a TrieNode in that particular index. Finally you set the isEnd variable to True
+        T = O(length of the word)
         '''
         curr = self.root
         charA = self.charA
@@ -35,6 +36,7 @@ class Trie:
     def search(self, word: str) -> bool:
         '''
         You iterate over the corresponding child nodes and see if you reach a None inbetween your traversal. This would sugest that the word is not present. Else you return the last node's isEnd which has to be True if the word is ending there 
+        T = O(length of the word)
         '''
         curr = self.root
         charA = self.charA
@@ -48,6 +50,7 @@ class Trie:
         '''
         iterate over the Trie and see if you envouter a None inebetween if so then return False 
         else return True
+        T = O(length of the prefix)
         '''
         curr = self.root
         charA = self.charA

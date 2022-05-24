@@ -1,3 +1,14 @@
+// Time Complexity : O(m*n) + O(k*m)
+// Space Complexity : O(m*n) + O(k)
+//    where n : Number of words in dictionary.
+//          m : average length of word in dictionary.
+//          k : Number of words in dictionary.
+// Did this code successfully run on Leetcode : yes
+
+// Three line explanation of solution in plain english
+/* Build a Prefix Trie using provided dictionary. Iterate over the each word of sentence, if prefix is found in trie then replace the word with the prefix.  
+ */
+
 class Solution {
     
     class TrieNode{

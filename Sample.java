@@ -75,3 +75,82 @@ class Trie {
         
     }
 }
+
+//****REPLACE WORDS
+//Time complexity: o(n*l);
+//Space complexity:
+//Leetcode runnable: Y;
+//Any doubts: N;
+class Solution {
+    class TrieNode
+    {
+        boolean isEnd;
+        TrieNode[] children;
+        public TrieNode()
+        {
+            children=new TrieNode[26];
+        }
+    }
+    TrieNode root;
+    
+    public void insert(String word) { //0(1)
+        TrieNode curr=root;
+        for(int i=0;i<word.length();i++)
+        {
+            char c=word.charAt(i);
+            //if that character doesnt exists already
+            if(curr.children[c-'a']==null)
+            {
+                //Making a child node
+                curr.children[c-'a']=new TrieNode();   
+            }
+            curr=curr.children[c-'a'];
+            
+        }
+        curr.isEnd=true;
+        
+    }
+    public String replaceWords(List<String> dictionary, String sentence) {
+        root=new TrieNode();
+        StringBuilder result=new StringBuilder();
+        //1.Adding dictonary words to the trie
+        for(String s: dictionary)
+        {
+            insert(s);
+        }
+        //2.Convert given sentence to string array
+        String[] strarr=sentence.split(" ");
+        
+        //3.Iterating over strarr
+        for(int k=0;k<strarr.length;k++)
+        {
+            String word=strarr[k];
+            if(k!=0) result.append(" "); 
+            StringBuilder replacement=new StringBuilder();
+            TrieNode curr=root;
+            //3.1 Iterating over a particular word
+            for(int i=0;i<word.length();i++)
+            {
+                char c=word.charAt(i);
+                if(curr.children[c-'a']==null || curr.isEnd)
+                {
+                    break;
+                }
+                replacement.append(c);
+                curr=curr.children[c-'a'];
+            }
+            if(curr.isEnd)
+            {
+                //replacement is found
+                result.append(replacement);
+            }
+            else
+            {
+                result.append(word);
+            }
+        }
+        
+        return result.toString();
+        
+    }
+}

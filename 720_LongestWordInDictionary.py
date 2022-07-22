@@ -2,7 +2,7 @@
 Leetcode-https://leetcode.com/problems/longest-word-in-dictionary/
 TC- O(2*N*K) for traversal and adding words, SC- O(N) for trie
 Challenges-Coming up with how to traverse all possible words in Trie
-Lecture-https://www.youtube.com/watch?v=C8VRMbEgOqc (similar problems lecture)
+Lecture-https://www.youtube.com/watch?v=gmLBi4J906A
 FAQ-
 
 

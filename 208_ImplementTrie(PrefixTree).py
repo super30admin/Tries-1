@@ -69,7 +69,7 @@ class Trie:
         self.root = TrieNode()
 
     # O(N)
-    def insert(self, word: str) -> None:
+    def insert(self, word) -> None:
         curr = self.root
         for char in word:
             # children index
@@ -83,7 +83,8 @@ class Trie:
         # mark the end of the word of the leaf node
         curr.isEnd = True
 
-    def search(self, word: str) -> bool:
+    # TC- O(N)
+    def search(self, word):
         curr = self.root
         for char in word:
             ci = ord(char) - ord('a')
@@ -95,7 +96,7 @@ class Trie:
         # check if the end of the word is try has isEnd which signifies a complete word in Trie
         return curr.isEnd
 
-    def startsWith(self, prefix: str) -> bool:
+    def startsWith(self, prefix):
         curr = self.root
         for char in prefix:
             ci = ord(char) - ord('a')

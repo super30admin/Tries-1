@@ -1,3 +1,4 @@
+# Did this code successfully run on Leetcode : Yes
 class Solution:
     def longestWord(self, words: List[str]) -> str:
 
@@ -34,7 +35,7 @@ class Solution:
         trie = Trie(words)
         l = collections.defaultdict(list)
         max_len = 0
-        # O(n*w) where n is num of words and w is the length of the word 
+        # O(n*w) where n is num of words and w is the length of the word
         for word in words:
             if trie.check_prefix(word):
                 l[len(word)].append(word)

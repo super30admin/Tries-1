@@ -1,3 +1,4 @@
+# Did this code successfully run on Leetcode : Yes
 class TrieNode:
     def __init__(self):
         self.children = {}

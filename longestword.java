@@ -1,5 +1,5 @@
-// Time Complexity : o(n) remaining
-// Space Complexity : o()
+//T.C : O( average of (n)) where n is the length of words[i]
+//S.C : O(average of (n)) space occupied by Trie
 // Did this code successfully run on Leetcode : yes
 // Any problem you faced while coding this : no
 

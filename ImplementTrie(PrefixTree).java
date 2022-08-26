@@ -7,7 +7,7 @@ import java.util.Queue;
 // Any problem you faced while coding this :
 
 // Your code here along with comments explaining your approach
-//51. N-Queens (Hard) - https://leetcode.com/problems/n-queens/
+//208. Implement Trie (Prefix Tree) (Medium) - https://leetcode.com/problems/implement-trie-prefix-tree/
 class Trie {
 
     class TrieNode {

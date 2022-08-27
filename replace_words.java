@@ -8,7 +8,7 @@ class Solution {
         public TrieNode(){
             children = new TrieNode[26];
         }
-        
+
     }
     TrieNode root;
     public void insert(String word){
@@ -17,7 +17,7 @@ class Solution {
             char ch = word.charAt(i);
             if(curr.children[ch-'a']==null)
                 curr.children[ch-'a'] = new TrieNode();
-            else
+            //else (***)
                 curr = curr.children[ch-'a'];
         }
         curr.isEnd = true;

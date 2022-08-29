@@ -1,3 +1,7 @@
+//TC: O(n*l) 
+//SC: O(n*l*26)  n- given list of words, l length of each word, 26 array size
+//leetcode: successful
+
 class Trie {
     Node root;
     class Node{

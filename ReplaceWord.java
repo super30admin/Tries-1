@@ -1,3 +1,6 @@
+//TC: O(n*l + mk)  m - no of words in sentence , k length of each word in sentence
+//SC: O(n*l)  n- given list of words, l length of each word
+//leetcode: successful
 
 class Solution {
     Node root;

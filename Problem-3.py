@@ -18,7 +18,7 @@ Solution:
       k is average length of the word in dictionary
       l is average length of the word in sentence
       
-      Time Complexity: O(m + g) 
+      Time Complexity: O((m *k) + (g * l)) 
       Space Complexity: O(k + l)
 '''
 from collections import defaultdict

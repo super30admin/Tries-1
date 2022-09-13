@@ -1,3 +1,5 @@
+# TC: O(maxlen(word))
+# SC: SC: O(Sum(len(words))) - To build the Tries
 class TrieNode:
     def __init__(self):
         self.isEnd = False

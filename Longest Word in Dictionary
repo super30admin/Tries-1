@@ -1,0 +1,28 @@
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        d = defaultdict(list)
+        s = []
+        
+        for word in words:
+            if len(word) == 1:
+                s.append(word)
+            d[word[:-1]].append(word)
+        if len(s) == 0:
+            return ""
+        longest_word = s[0]     
+        for word in s:
+            q = []
+            q += d[word]
+            print(q)
+            while q:
+                cur = q.pop()
+                if len(cur) > len(longest_word):
+                    longest_word = cur
+                if len(cur) == len(longest_word):
+                    longest_word = min(longest_word, cur)
+                q += d[cur] 
+        return longest_word
+    
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+# Successfully implemented on Leetcode

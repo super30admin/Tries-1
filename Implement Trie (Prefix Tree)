@@ -1,0 +1,36 @@
+class Trie:
+
+    def __init__(self):
+        self.next = {}
+        self.end = False
+
+    def insert(self, word: str) -> None:
+        node = self
+        for ch in word:
+            node = node.next.setdefault(ch, Trie())
+        node.end = True
+    def _parse(self, string: str) -> Optional['Trie']:
+        node = self
+        for ch in string:
+            if ch not in node.next: return None
+            node = node.next[ch]
+        return node
+
+    def search(self, word: str) -> bool:
+        node = self._parse(word)
+        return bool(node) and node.end
+
+    def startsWith(self, prefix: str) -> bool:
+        node = self._parse(prefix)
+        return bool(node)
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
+
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+# Successfully implemented on Leetcode

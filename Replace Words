@@ -1,0 +1,37 @@
+class Trie:
+    def __init__(self, c=''):
+        self.roots = {}
+        self.val = c
+        self.long = False
+    
+    def add(self, word):
+        curr = self
+        for c in word:
+            if c not in curr.roots: 
+                curr.roots[c] = Trie()
+            curr = curr.roots[c]
+            curr.val = c
+        curr.long = True
+        
+    def get_l(self, word): 
+        curr = self
+        long = ''
+        for c in word:
+            if c not in curr.roots: break
+            curr = curr.roots[c]
+            long += c
+            if curr.long: return long
+        return word
+
+class Solution:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        t = Trie()
+        for l in dictionary:
+            t.add(l)
+        sentence = sentence.split(' ')
+        sentence = [t.get_l(w) for w in sentence]
+        return ' '.join(sentence)
+    
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+# Successfully implemented on Leetcode

@@ -1,0 +1,63 @@
+class TrieNode{
+    public:
+    bool check;
+    TrieNode *children[26];
+    
+    TrieNode(){
+        check = false;
+        for(int i = 0; i<26; i++){
+            children[i] = NULL;
+        }
+    }
+};
+
+class Trie {
+public:
+  
+   
+    
+     TrieNode *root = new TrieNode();
+     
+    
+    void insert(string word) {
+        TrieNode *curr = root;
+        for( int i = 0 ; i< word.length(); i++){
+            if(curr->children[ word[i] - 'a'] == NULL){
+                curr->children[ word[i] - 'a'] = new TrieNode();
+            }
+            curr = curr->children[ word[i] - 'a'];
+        }
+        curr->check = true;
+    }
+    
+    bool search(string word) {
+        TrieNode *curr = root;
+        for( int i = 0 ; i< word.length(); i++){
+            if(curr->children[ word[i] - 'a'] == NULL){
+            return false;  
+            }
+            curr = curr->children[word[i]-'a'];
+        }
+        return curr->check;
+    }
+    
+    bool startsWith(string prefix) {
+        TrieNode *curr = root;
+        for(int i = 0 ; i< prefix.length(); i++){
+            if( curr->children[prefix[i] - 'a'] == NULL){
+                return NULL;
+            }
+           else
+               curr = curr->children[prefix[i]-'a'];
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */

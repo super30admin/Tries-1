@@ -1,7 +1,7 @@
-from collections import deque
 #BFS Solution
 #TC: O(n*l)
 #SC: O(n*l)
+from collections import deque
 class TrieNode:
     def __init__(self):
         self.word = ""

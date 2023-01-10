@@ -2,6 +2,8 @@
 #space complexity: O(n)
 #ran on leetcode: Yes
 #Create a Node class which will point to 26 possible nodes, each representing a charcter. Initially these nodes are null and they are created when the character is encounterd.
+#After setting up the trie structure and inserting words from dictionary, loop through the sentence. For each word in the sentence, check if a shorter word 
+#is present in Trie.If yes then use this shorter word. 
 class Node:
     def __init__(self):
         self.end=False

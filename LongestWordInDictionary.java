@@ -1,6 +1,6 @@
 //https://leetcode.com/problems/longest-word-in-dictionary
-//Tc : O(n * l) 
-//Sc : O(n * l) n - number of words , l - average length of the words
+//Tc : O(n * l)   n - number of words , l - average length of the words
+//Sc : O(1) - Children TrieNodes of 256 - constant
 
 
 class Solution {

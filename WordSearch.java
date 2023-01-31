@@ -2,9 +2,9 @@
 //Space Complexity: O(ml + nl)
 
 /*
- * In this approach we iterate over the board and if can find the word we return true or else false. For finding the word we check if a particular char is equal to 
- * the same index of the word. If not we return false. If it does we mark that as visited and move on, we check all the neighbors and do same thing again. If we dont
- * find char at the word index from all the neighbors we mark it as unvisited.
+ * In this approach we start from the root, we first insert all the words in the dictionary ad trie nodes. We then split our sentence with the space.
+   For all the words of the sentence we iterate over all the characters and if there are no children or is end is true we break, other wise we append those characters
+   to the intermediate string and move to the next children. If we find the shortest prefix we append it to result.
 
 */
 class Solution {

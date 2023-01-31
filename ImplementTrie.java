@@ -1,10 +1,11 @@
 //Time Complexity: O(l) , l-> length of the word
-//Space Complexity: O(l), l-> length of the word
+//Space Complexity: O(1)
 
 /*
- * In this approach we iterate over the board and if can find the word we return true or else false. For finding the word we check if a particular char is equal to 
- * the same index of the word. If not we return false. If it does we mark that as visited and move on, we check all the neighbors and do same thing again. If we dont
- * find char at the word index from all the neighbors we mark it as unvisited.
+ * In this approach we implement trie, we take trienode of 26. We take a root node. To insert we loop over the charcters of the word and if the node to that particular char
+   is not present then we add a trie node. if it is there we just increment the current to next children. Once we insert the whole word we mark the isend as true at that char.
+   To search we again loop over the characters of the word, and if it is not present we return false, or we return the isend. To find prefix we saerch the
+   prefix and if we find it we return true.
 
 */
 class Trie {

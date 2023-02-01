@@ -1,5 +1,5 @@
 # Time Complexity :
-# O()
+# O((N+n)L) where N is the number of words in the sentence and n is the number of roots and L is maximum length of word from either list
 
 # Space Complexity :
 # O(26^L) - L is the max length of the root words

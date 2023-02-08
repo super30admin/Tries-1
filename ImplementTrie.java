@@ -1,7 +1,9 @@
-// Time Complexity : O(N)
-// Space Complexity : O(1)
+// Time Complexity : O(L) for all insert(), search(), startsWith() runs in O(L)
+// Space Complexity : O(1) for all insert(), search(), startsWith() runs in O(L)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
+
+// L is length of input string
 
 public class ImplementTrie {
 

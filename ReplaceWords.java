@@ -1,5 +1,5 @@
 /*
-    Time Complexity - O(n + m) n steps to insert all words in dictionary to trie. n is the sum of length of words in dictionary. m is the length of string sentence.
+    Time Complexity - O(n) n steps to insert all words in dictionary to trie. n is the sum of length of words in dictionary. 
     Space complexity - O(n)
 */
 class Solution {

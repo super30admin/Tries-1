@@ -1,0 +1,67 @@
+// Time Complexity o(n) Space complexity o(n)
+import java.util.List;
+
+class Solution {
+    public static class Trie {
+        public static class TrieNode {
+            TrieNode[] children;
+            boolean isEnd;
+
+            public TrieNode() {
+                this.children = new TrieNode[26];
+            }
+        }
+
+        TrieNode root;
+
+        public Trie() {
+            root = new TrieNode();
+        }
+
+        public void insert(String word) {
+            TrieNode curr = root;
+            for (int i = 0; i < word.length(); i++) {
+                char c = word.charAt(i);
+                if (curr.children[c - 'a'] == null) {
+                    curr.children[c - 'a'] = new TrieNode();
+                }
+                curr = curr.children[c - 'a'];
+            }
+            curr.isEnd = true;
+        }
+    }
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+        Trie trie = new Trie();
+        for (String word : dictionary) {
+            trie.insert(word);
+        }
+
+        String[] str = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < str.length; i++) {
+            StringBuilder rep = new StringBuilder();
+            Trie.TrieNode curr = trie.root;
+            String word = str[i];
+            if (i > 0)
+                rep.append(" ");
+            for (int k = 0; k < word.length(); k++) {
+                char c = word.charAt(k);
+                if (curr.isEnd || curr.children[c - 'a'] == null) {
+                    break;
+                }
+                curr = curr.children[c - 'a'];
+                rep.append(c);
+            }
+            if (curr.isEnd) {
+                result.append(rep);
+            } else {
+                if(i>0)
+                result.append(" "+word);
+                else result.append(word);
+            }
+        }
+
+        return result.toString();
+    }
+}

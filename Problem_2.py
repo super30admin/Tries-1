@@ -15,6 +15,10 @@ finally returns the last string obtained from the BFS traversal, which represent
 
 # Longest Word in Dictionary
 
+
+# Approach - 1
+# BFS
+
 class TrieNode(object):
         def __init__(self):
             self.children=[None for _ in range(26)]
@@ -65,3 +69,62 @@ class Solution(object):
                     sq.append(st)
 
         return currStr
+
+
+# Approach - 2
+# DFS
+
+class TrieNode(object):
+        def __init__(self):
+            self.children=[None for _ in range(26)]
+            self.isEnd=False
+
+class Solution(object):
+    def __init__(self):
+        self.root=TrieNode()
+        self.maxStr=""
+
+    def insert(self, word):
+        """
+        :type word: str
+        :rtype: None
+        """
+        curr=self.root
+        for i in range(len(word)):
+            c=word[i]
+            index=ord(c)-ord('a')
+            if curr.children[index]==None:
+       
+                curr.children[index]=TrieNode()
+            
+            curr=curr.children[index]
+        curr.isEnd=True
+
+    def longestWord(self, words):
+        """
+        :type words: List[str]
+        :rtype: str
+        """
+        for word in words:
+            self.insert(word)
+        self.dfs(self.root,"")
+        
+        return self.maxStr
+    def dfs(self,curr,path):
+        # base
+        if len(path)>=len(self.maxStr):
+            self.maxStr=path
+            
+
+        # logic
+        for i in range(25,-1,-1):
+            child=curr.children[i]
+
+            if child and child.isEnd:
+                # action
+                l=len(path)
+                path+=chr(ord('a')+i)
+                # recurse
+                self.dfs(child,path)
+                # backtrack
+                path=path[0:l]

@@ -3,6 +3,9 @@
 // Space Complexity :O(n*l) where n is the number of words and l is the avg length of each word
 // Did this code successfully run on Leetcode :yes
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 //BFS:
 // Time Complexity :O(n*l) where n is the number of words and l is the avg length of each word
 // Space Complexity :O(n*l) where n is the number of words and l is the avg length of each word
@@ -20,6 +23,32 @@ public class LongestWord {
     private TrieNode root;
     private String longestWord;
 
+    public String longestWordBFS(String[] words){
+        this.root = new TrieNode();
+        for(String word: words){
+            insert(word);
+        }
+
+        Queue<TrieNode> q = new LinkedList<>();
+        Queue<String> sq = new LinkedList<>();
+
+        q.add(root);
+        sq.add("");
+        String currStr = "";
+        while(!q.isEmpty()){
+            TrieNode curr = q.poll();
+            currStr = sq.poll();
+            for(int i=25; i>=0; i--){
+                TrieNode child = curr.children[i];
+                if(child != null && child.isEnd){
+                    q.add(child);
+                    String st = currStr + (char)('a'+ i);
+                    sq.add(st);
+                }
+            }
+        }
+        return currStr;
+    }
     public String longestWord(String[] words) {
 
         this.root = new TrieNode();

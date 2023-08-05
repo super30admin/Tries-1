@@ -1,0 +1,61 @@
+/** Time Complexity - O(N) where N = len(sentence)
+Space Complexity - O(N)
+ */
+class Solution {
+
+    class TrieNode {
+
+        TrieNode[] children;
+        boolean isEnd;
+
+        public TrieNode() {
+            this.children = new TrieNode[26];
+        }
+    }
+
+    private void insertWord(final String word, TrieNode root) {
+        for(char c : word.toCharArray()) {
+            if (root.children[c -'a'] == null) {
+                root.children[c-'a'] = new TrieNode();
+            }
+            root = root.children[c-'a'];
+        }
+        root.isEnd = true;
+    }
+
+    private String searchPrefix(final String word, TrieNode root) {
+        final StringBuilder sb = new StringBuilder();
+        for(char c : word.toCharArray()) {
+            if (root.children[c -'a'] == null) {
+                return null;
+            }
+            sb.append(c);
+            root = root.children[c-'a'];
+            if (root.isEnd) {
+                break;
+            }
+        }
+        return sb.toString();
+    }
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+        TrieNode curr = new TrieNode();
+        String[] split = sentence.split(" ");
+        for (String word : dictionary) {
+            insertWord(word, curr);
+        }
+
+        // Replace dictionary
+        StringBuilder sb = new StringBuilder();
+        for (String word : split) {
+            String prefix = searchPrefix(word, curr);
+            if (prefix != null) {
+                sb.append(prefix);
+            } else {
+                sb.append(word);
+            }
+            sb.append(" ");
+        }
+        return sb.toString().trim();
+    }
+}

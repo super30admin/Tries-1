@@ -60,7 +60,93 @@ class Trie {
     }
 }
 
+//Problem 2: longest word in dictionary
+// Time Complexity : O(n*l) n=number of words, l=avg length of word
+// Space Complexity : O(n*l)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
 
+
+// Your code here along with comments explaining your approach
+//DFS: check for all the strings with local Stringbuilder and backtrack whenever u are checking for another children of the parent. store maximum string in result always. it will automatically be lexicograpbically sorted
+// BFS: check for children in reverse order(for lexicographical check) it will automatically return longest string as we travel breath wise and to max possible level 
+class Solution {
+    class TrieNode{
+        TrieNode[] children;
+        boolean isEnd;
+
+        public TrieNode(){
+            this.children=new TrieNode[26];
+        }
+    }
+    private void insert(TrieNode root, String word){
+        TrieNode cur=root;
+        for(int i=0;i<word.length();i++){
+            char c=word.charAt(i);
+            if(cur.children[c-'a']==null){
+                cur.children[c-'a']=new TrieNode();
+            }
+            cur=cur.children[c-'a'];
+        }
+        cur.isEnd=true;
+    }
+
+    TrieNode root;
+    String result;
+    public String longestWord(String[] words) {
+        this.root=new TrieNode();
+        this.result="";
+        // dfs solution
+
+        for(String str: words){ //n*l l=avg length of each word
+            insert(root, str);
+        }
+
+        //BFS way  TC: O(n*l) O(n*l);
+        // Queue<TrieNode> q= new LinkedList<>();
+        // Queue<String> sq= new LinkedList<>();
+        // q.add(root); sq.add("");
+        // String curSb="";
+        // while(!q.isEmpty()){
+        //     TrieNode cur=q.poll();
+        //     curSb=sq.poll();
+        //     for(int i=25;i>=0;i--){
+        //         if(cur.children[i]!=null && cur.children[i].isEnd){
+        //             q.add(cur.children[i]);
+        //             String newsb=curSb+ (char)(i+'a');
+        //             sq.add(newsb);
+        //         }
+        //     }
+        // }
+        // return curSb;
+
+
+        //DFS way n*l n*l
+        dfs(root, new StringBuilder());
+        return result;
+    }
+
+    private void dfs(TrieNode cur, StringBuilder res){
+        //base
+        if(res.length()>result.length()){
+            result=res.toString();
+        }
+        //logic
+        for(int i=0;i<26;i++){
+            if(cur.children[i]!=null && cur.children[i].isEnd){ //isEnd also needs to be true
+                int earlierLength=res.length();
+                //action
+                res.append((char)(i+'a'));
+                //recurse
+                dfs(cur.children[i], res);
+
+                //backtrack
+                res.setLength(earlierLength);
+            }
+        }
+    }
+
+}
 
 //Problem 3: replace words
 // Time Complexity : O(n*l) n=number of words, l=length of longest word

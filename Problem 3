@@ -1,0 +1,63 @@
+# Replace Words
+
+Time complexity is O(n * m + k * l), and the space complexity is O(n * m), where:
+
+n is the number of words in the dictionary.
+m is the average length of each word in the dictionary.
+k is the number of words in the sentence.
+l is the average length of each word in the sentence.
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.is_end_of_word = True
+
+    def search_shortest_prefix(self, word):
+        node = self.root
+        prefix = ""
+        for char in word:
+            if char not in node.children:
+                break
+            prefix += char
+            node = node.children[char]
+            if node.is_end_of_word:
+                return prefix
+        return word
+
+class Solution:
+    def replaceWords(self, dictionary: List[str], sentence: str) -> str:
+        trie = Trie()
+        for root in dictionary:
+            trie.insert(root)
+
+        words = sentence.split()
+        replaced_sentence = []
+        for word in words:
+            shortest_prefix = trie.search_shortest_prefix(word)
+            replaced_sentence.append(shortest_prefix)
+
+        return ' '.join(replaced_sentence)
+
+
+# Test cases
+sol = Solution()
+dictionary1 = ["cat", "bat", "rat"]
+sentence1 = "the cattle was rattled by the battery"
+print(sol.replaceWords(dictionary1, sentence1))  # Output: "the cat was rat by the bat"
+
+dictionary2 = ["a", "b", "c"]
+sentence2 = "aadsfasf absbs bbab cadsfafs"
+print(sol.replaceWords(dictionary2, sentence2))  # Output: "a a b c"

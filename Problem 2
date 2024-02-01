@@ -1,0 +1,40 @@
+# Longest Word in Dictionary
+
+# tc:O(n*m)
+# sc:O(n*m)
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end_of_word = False
+
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        trie = TrieNode()
+        for word in words:
+            node = trie
+            for char in word:
+                if char not in node.children:
+                    node.children[char] = TrieNode()
+                node = node.children[char]
+            node.is_end_of_word = True
+
+        def dfs(node):
+            longest_word = ""
+            for char, child in sorted(node.children.items()):
+                if child.is_end_of_word:
+                    word = char + dfs(child)
+                    if len(word) > len(longest_word) or (len(word) == len(longest_word) and word < longest_word):
+                        longest_word = word
+            return longest_word
+
+        return dfs(trie)
+
+
+# Test cases
+sol = Solution()
+words1 = ["w", "wo", "wor", "worl", "world"]
+print(sol.longestWord(words1))  # Output: "world"
+words2 = ["a", "banana", "app", "appl", "ap", "apply", "apple"]
+print(sol.longestWord(words2))  # Output: "apple"

@@ -1,60 +1,49 @@
 //Accepted on LT
 // Same logic maintain a trie and in the trie we chekc for any word to replace if so we do
 class Solution {
-    public String replaceWords(List<String> dictionary, String sentence) {
-        class TrieNode {
-            TrieNode[] children;
-            boolean isEnd;
-        
-            public TrieNode() {
-                children = new TrieNode[26];
-                isEnd = false;
-            }
-        }
-        TrieNode root = new TrieNode();
-        buildTrie(dictionary, root);
+    class TrieNode {
+        boolean flag;
+        TrieNode[] children;
 
-        StringBuilder result = new StringBuilder();
+        public TrieNode() {
+            this.children = new TrieNode[26];
+        }
+    }
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+        TrieNode root = new TrieNode();
+
+        for (String word : dictionary) {
+            TrieNode current = root;
+            for (int i = 0; i < word.length(); i++) {
+                char c = word.charAt(i);
+                if (current.children[c - 'a'] == null) {
+                    current.children[c - 'a'] = new TrieNode();
+                }
+                current = current.children[c - 'a'];
+            }
+            current.flag = true;
+        }
+
         String[] words = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
 
         for (String word : words) {
-            String replacement = findRoot(word, root);
-            result.append(replacement).append(" ");
-        }
-
-        return result.toString().trim();
-    }
-
-    private void buildTrie(List<String> dictionary, TrieNode root) {
-        for (String word : dictionary) {
-            TrieNode node = root;
-            for (char ch : word.toCharArray()) {
-                if (node.children[ch - 'a'] == null) {
-                    node.children[ch - 'a'] = new TrieNode();
+            TrieNode current = root;
+            StringBuilder prefix = new StringBuilder();
+            for (char c : word.toCharArray()) {
+                if (current.children[c - 'a'] == null) break;
+                prefix.append(c);
+                current = current.children[c - 'a'];
+                if (current.flag) {
+                    word = prefix.toString();
+                    break;
                 }
-                node = node.children[ch - 'a'];
             }
-            node.isEnd = true;
-        }
-    }
-
-    private String findRoot(String word, TrieNode root) {
-        TrieNode node = root;
-        StringBuilder prefix = new StringBuilder();
-
-        for (char ch : word.toCharArray()) {
-            prefix.append(ch);
-            if (node.children[ch - 'a'] == null) {
-                return word;
-            }
-            node = node.children[ch - 'a'];
-            if (node.isEnd) {
-                return prefix.toString();
-            }
+            if (result.length() > 0) result.append(" ");
+            result.append(word);
         }
 
-        return word;
+        return result.toString();
     }
-
-    
 }

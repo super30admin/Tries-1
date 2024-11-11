@@ -1,0 +1,47 @@
+class Solution {
+    public String replaceWords(List<String> dictionary, String sentence) {
+        TrieNode root = new TrieNode();
+        for (String word : dictionary) {
+            insert(word, root);
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (String word : sentence.split(" ")) {
+            String replacement = searchRoot(word, root);
+            result.append(replacement != null ? replacement : word).append(" ");
+        }
+        return result.toString().trim();
+    }
+
+    private void insert(String word, TrieNode root) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            if (node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new TrieNode();
+            }
+            node = node.children[c - 'a'];
+        }
+        node.isEndOfWord = true;
+    }
+
+    private String searchRoot(String word, TrieNode root) {
+        TrieNode node = root;
+        StringBuilder prefix = new StringBuilder();
+        for (char c : word.toCharArray()) {
+            if (node.children[c - 'a'] == null) {
+                return null;
+            }
+            node = node.children[c - 'a'];
+            prefix.append(c);
+            if (node.isEndOfWord) {
+                return prefix.toString();
+            }
+        }
+        return null;
+    }
+
+    private class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean isEndOfWord;
+    }
+}

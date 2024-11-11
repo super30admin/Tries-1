@@ -1,0 +1,48 @@
+//TC: o(m)
+//SC: 0(n*m)
+class Solution {
+    public String longestWord(String[] words) {
+        TrieNode root = new TrieNode();
+        for (String word : words) {
+            insert(word, root);
+        }
+        
+        String longest = "";
+        for (String word : words) {
+            if (canForm(word, root)) {
+                if (word.length() > longest.length() || 
+                    (word.length() == longest.length() && word.compareTo(longest) < 0)) {
+                    longest = word;
+                }
+            }
+        }
+        return longest;
+    }
+    private void insert(String word, TrieNode root) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            if (node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new TrieNode();
+            }
+            node = node.children[c - 'a'];
+        }
+        node.isEndOfWord = true;
+    }
+
+    private boolean canForm(String word, TrieNode root) {
+        TrieNode node = root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            node = node.children[c - 'a'];
+            if (node == null || !node.isEndOfWord) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        boolean isEndOfWord = false;
+    }
+}

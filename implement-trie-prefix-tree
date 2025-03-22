@@ -1,0 +1,63 @@
+// Time Complexity : O(l)
+// Space Complexity : O(n*l)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach: here implementing TrieNode by initiaing children and isEnd ,as well while insertin,seraching and startwith we are itterating over the word and checing wheter ch is exist in the curr.children where root is curr. and making word end as true in the trienode to make sure where the word is goin go end.
+
+class Trie {
+    class TrieNode{
+        TrieNode [] children;
+        boolean isEnd;
+        public TrieNode(){
+            this.children=new TrieNode[26];
+        }
+    }
+    private TrieNode root;
+
+    public Trie() {
+        this.root=new TrieNode();
+    }
+    
+    public void insert(String word) {//O(l) =>length of word
+        TrieNode curr=root; //initiating current pointer
+        for(int i=0;i<word.length();i++){ //itterating over word
+            char ch=word.charAt(i);
+            if(curr.children[ch-'a'] == null){ // checking whether the char exist in trie or not
+                curr.children[ch-'a']=new TrieNode(); // if the node is null adding new trienode
+            }
+            curr=curr.children[ch-'a']; //moving curr t curr children
+        }
+        curr.isEnd=true; //making curr end as true to identify where the word is going to end otherwise we can retrive word while searching
+        
+    }
+    
+    public boolean search(String word) {//O(l)=>length of word
+        TrieNode curr=root;
+        for(int i=0;i<word.length();i++){
+            char ch=word.charAt(i);
+            if(curr.children[ch-'a']==null)return false;
+            curr=curr.children[ch-'a'];
+        }
+        return curr.isEnd; 
+    }
+    
+    public boolean startsWith(String prefix) { //O(l)=>length of prefix
+        TrieNode curr=root;
+        for(int i=0;i<prefix.length();i++){
+            char ch=prefix.charAt(i);
+            if(curr.children[ch-'a'] == null)return false;
+            curr=curr.children[ch-'a'];
+        }
+        return true;
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */

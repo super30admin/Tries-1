@@ -1,0 +1,91 @@
+// Time Complexity : O((m+n)*l) 
+// Space Complexity : O(n*l) //trie space for dictionary
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach: here i am implementing TrieNode to store dictionary effectively and spliting sequence into array of strings 
+// and searching for sequence word in trie(dictionary) while matching char from TrieNode appending it to newString,if we find node which is equal to current char  from my seq word and  where ever i encounter isEnd is true from matching node then it tells us that the word is existing in dic so then  i am replaing my seq word with subString.  
+class Solution {
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+        class TrieNode {
+            TrieNode[] children;
+            boolean isEnd;
+
+            public TrieNode() {
+                this.children = new TrieNode[26];
+            }
+        }
+        TrieNode root = new TrieNode();
+        for ( String currentStr : dictionary) { // creating trie for dictionary O(n*l) where n is length of dic
+                                                      // and l is length of each dic word
+            TrieNode curr = root;
+            for (int j = 0; j < currentStr.length(); j++) {
+                char ch = currentStr.charAt(j);
+                if (curr.children[ch - 'a'] == null) {
+                    curr.children[ch - 'a'] = new TrieNode();
+                }
+                curr = curr.children[ch - 'a'];
+            }
+            curr.isEnd = true;
+        }
+
+        String[] strArray = sentence.split(" ");
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < strArray.length; i++) {// creating trie for dictionary O(m*l) where n is length of sequence and l is length of each sequence word
+            String currentStr = strArray[i];
+            TrieNode curr = root;
+            if (i != 0)
+                result.append(" ");
+            StringBuilder shortStr = new StringBuilder();
+            for (int j = 0; j < currentStr.length(); j++) {
+                char ch = currentStr.charAt(j);
+                if (curr.children[ch - 'a'] == null || curr.isEnd)  break;
+                shortStr.append(ch);
+                curr = curr.children[ch - 'a'];
+            }
+            if (curr.isEnd) {
+                strArray[i] = new String(shortStr);
+            }
+            result.append(strArray[i]);
+        }
+
+        return new String(result);
+    }
+}
+
+
+// Time Complexity : O(n*l) + O(m*l^2) 
+// Space Complexity : O(n*l) //trie space for dictionary
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+
+// Your code here along with comments explaining your approach:here using hasset to store dictionary elemets and 
+//itterating the split array and itterating over to check if my substring of string find from hashset then i replace split array of particular index with substring otherwise keeping as it is.
+class Solution {
+ public String replaceWords(List<String> dictionary, String sentence) {
+    HashSet<String> st=new HashSet<>(dictionary); //O(n*l) copying all dictionary words into hashset for n words na dlength l for each
+//    s.c:  //taking O(m*l) for m words of length l 
+      String[] strArray = sentence.split(" ");//T.c : O(m) //for spliting seq where seq length is m
+      StringBuilder result = new StringBuilder();
+      for (int i = 0; i < strArray.length; i++) { 
+        if(i != 0){
+            result.append(" ");
+        }
+         String currentStr = strArray[i];
+          for (int j = 0; j < currentStr.length(); j++) {  
+                String subStr=currentStr.substring(0,j+1); //O(l^2) worest case forming all substrings is  l^2 where l is length of string
+                if(st.contains(subStr)){
+                   strArray[i]=subStr;
+                   break;
+                }
+          }
+           result.append(strArray[i]);
+      }
+        return new String(result);
+    }
+}

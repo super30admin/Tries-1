@@ -1,0 +1,68 @@
+class Solution {
+
+    TrieNode root;
+    // need a trie node 
+    class TrieNode{
+        TrieNode[] child;
+        boolean isWord;
+        TrieNode(){
+            child = new TrieNode[26];
+            isWord = false;
+        }
+    }
+    
+    Solution(){
+        this.root = new TrieNode();
+    }
+    public String replaceWords(List<String> dictionary, String sentence) {
+        // auxilary array of strings 
+        String[] words = sentence.split(" ");
+        StringBuilder replacedStr = new StringBuilder();
+
+        //step 1 Build trie 
+        for(String word : dictionary){
+            insertIntoTrie(word);
+        }
+
+        // step 2 split and look for the root else return the word 
+        for(int i=0; i < words.length ;i++){
+            findPrefix(words[i],replacedStr);
+            replacedStr.append(" ");
+        }
+        // step 3 combine the 
+        replacedStr.deleteCharAt(replacedStr.length()-1);
+
+        return replacedStr.toString();
+    }
+
+    private void findPrefix(String word, StringBuilder replacedStr){
+        TrieNode temp = root;
+        StringBuilder buildRoot = new StringBuilder(); // for building root for current word
+        for(int i = 0 ; i< word.length() ;i++){
+            char c = word.charAt(i);
+            if(temp.child[c-'a'] == null){
+                break;
+            }
+            temp = temp.child[c-'a'];
+            buildRoot.append(c);
+            if(temp.isWord){
+                replacedStr.append(buildRoot);
+                return ;
+            }
+        }
+        replacedStr.append(word);
+    }
+
+    private void insertIntoTrie(String word){
+        TrieNode temp = root;
+
+        for(int i =0 ;i< word.length() ; i++){
+            char c = word.charAt(i);
+            if(temp.child[c-'a'] == null){
+                temp.child[c-'a'] = new TrieNode();
+            }
+            temp = temp.child[c-'a'];
+        }
+        temp.isWord = true;
+    }
+}

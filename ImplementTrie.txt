@@ -1,0 +1,59 @@
+class Trie {
+
+    TrieNode root;
+
+    class TrieNode{
+        TrieNode[] children;
+        boolean isWord;
+        TrieNode(){
+            this.children = new TrieNode[26];
+            this.isWord = false;
+        } 
+    }
+    public Trie() {
+        this.root = new TrieNode();
+    }
+    
+    public void insert(String word) {
+        TrieNode temp = root;
+        for(int i=0 ; i < word.length() ; i++){
+            char c = word.charAt(i);
+            if(temp.children[c -'a'] == null){
+                temp.children[c -'a'] = new TrieNode();
+            }
+            temp =  temp.children[c -'a'];
+            if( i == word.length()-1) temp.isWord = true;
+        }
+    }
+    
+    public boolean search(String word) {
+        TrieNode temp = root;
+        for(int i=0 ; i< word.length() ; i++){
+            char c = word.charAt(i);
+            if(temp.children[c -'a'] == null ) return false;
+            else {
+                temp = temp.children[c -'a'];
+                if(i == word.length()-1 && temp.isWord ) return true;  
+            }
+        }
+        return false;
+    }
+    
+    public boolean startsWith(String prefix) {
+        TrieNode temp = root; 
+        for(int i=0 ; i< prefix.length() ;i++){
+            char c = prefix.charAt(i);
+            if(temp.children[c - 'a'] == null) return false;
+            else temp = temp.children[c-'a'];
+        }       
+        return true;
+    }
+}
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie obj = new Trie();
+ * obj.insert(word);
+ * boolean param_2 = obj.search(word);
+ * boolean param_3 = obj.startsWith(prefix);
+ */

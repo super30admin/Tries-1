@@ -1,0 +1,60 @@
+class Solution {
+    TrieNode root;
+    String longest;
+    class TrieNode{
+        TrieNode[] child;
+        boolean isWord;
+        TrieNode(){
+            this.child = new TrieNode[26];
+            this.isWord = false;
+        }
+
+    }
+    Solution(){
+        this.root = new TrieNode();
+        root.isWord=true;
+    }
+
+    public String longestWord(String[] words) {
+        this.longest = "";
+        int maxLength = 0;
+
+        for(String str : words){
+            insertInTrie(str);
+        }
+        StringBuilder sb = new StringBuilder();
+        TrieNode temp = root;
+        helper(temp,sb);
+
+        return longest;
+    }
+
+    //insert into trie 
+    private void insertInTrie(String str){
+        TrieNode temp = root;
+        for(int i=0; i < str.length() ; i++){
+            char c = str.charAt(i);
+            if(temp.child[c-'a'] == null) temp.child[c-'a'] = new TrieNode();
+            temp = temp.child[c-'a'];
+            if( i == str.length()-1) temp.isWord = true; 
+        }
+    }
+    private void helper(TrieNode temp, StringBuilder sb){
+
+            //base 
+            if(sb.length() > longest.length()) longest = sb.toString();
+            // logic
+
+            for(int i=0 ; i < 26 ; i++){
+                if(temp.child[i] != null && temp.child[i].isWord){
+                    // action 
+                    sb.append((char)(i+'a'));
+                    // recursion
+                    helper(temp.child[i],sb);
+                    // backtrack
+                    sb.deleteCharAt(sb.length()-1);
+                }
+            }
+
+    }
+}
